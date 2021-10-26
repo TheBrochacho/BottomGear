@@ -1,0 +1,20 @@
+{
+  "welcome" : {
+    "category" : "master",
+    "sounds" : [
+      {
+        "name" : "welcome",
+        "stream" : false
+      }
+    ]
+  },
+  "bottomGear" : {
+    "category" : "master",
+    "sounds" : [
+      {
+        "name" : "bottom_gear",
+        "stream" : false
+      }
+    ]
+  }
+}
