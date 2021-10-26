@@ -1,13 +1,13 @@
 [
   {
-    "modid": "examplemod",
-    "name": "Example Mod",
-    "description": "Example placeholder mod.",
+    "modid": "bottomgear",
+    "name": "Bottom Gear",
+    "description": "Welcome to BottomGear mates. Tonoight on BottomGear, Brochacho adds a scalable score determined by equipped items, a ripped skeleton invades a russian 4 man base, and a solo player wonders why the mobs have stopped spawning.",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": " ",
     "updateUrl": " ",
-    "authorList": "basdxz",
+    "authorList": ["TheBrochacho"],
     "credits": " ",
     "logoFile": "",
     "screenshots": [],
