@@ -109,7 +109,7 @@ dependencies {
     runtimeOnly("mcp.mobius.waila:Waila:$wailaVersion")
     runtimeOnly("codechicken:CodeChickenLib:$codechickenlibVersion:dev")
     runtimeOnly("codechicken:CodeChickenCore:$codechickencoreVersion:dev")
-    runtimeOnly("codechicken:NotEnoughItems:$neiVersion:dev")
+    compile("codechicken:NotEnoughItems:$neiVersion:dev")
 }
 sourceSets.main {
     java {
