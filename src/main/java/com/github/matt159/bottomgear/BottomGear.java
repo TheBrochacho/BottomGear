@@ -2,13 +2,11 @@ package com.github.matt159.bottomgear;
 
 import com.github.matt159.bottomgear.events.MobSpawnListener;
 import com.github.matt159.bottomgear.events.PlayerListener;
-import com.github.matt159.bottomgear.item.DebugStick;
-import cpw.mods.fml.common.FMLCommonHandler;
+import com.github.matt159.bottomgear.item.BottomStick;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -18,7 +16,7 @@ public class BottomGear {
     public static final String NAME = "Bottom Gear";
     public static final String VERSION = "@version@";
 
-    public static final DebugStick DEBUG_STICK = new DebugStick(Item.ToolMaterial.IRON);
+    public static final Item DEBUG_STICK = new BottomStick();
 
     @EventHandler
     public void init(FMLInitializationEvent event) {
