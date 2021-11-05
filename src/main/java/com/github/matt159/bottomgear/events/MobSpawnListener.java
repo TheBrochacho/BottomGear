@@ -11,14 +11,18 @@ import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 public class MobSpawnListener {
     @SubscribeEvent
     public void mobSpawnEvent(LivingSpawnEvent.CheckSpawn event) {
-        if (event.entity instanceof EntityMob) {
-            EntityMob mob = (EntityMob) event.entity;
+        try {
+            if (event.entity instanceof EntityMob) {
+                EntityMob mob = (EntityMob) event.entity;
 
-            EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 128);
+                EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 128);
 
-            if (player != null && PlayerGearScores.getInstance().get(player.getUniqueID()) > 4) {
-                event.setResult(Event.Result.DENY);
+                if (player != null && PlayerGearScores.getInstance().get(player.getUniqueID()) > 4) {
+                    event.setResult(Event.Result.DENY);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
