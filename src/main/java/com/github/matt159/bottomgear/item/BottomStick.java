@@ -1,17 +1,16 @@
 package com.github.matt159.bottomgear.item;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import baubles.api.IBauble;
+import com.github.matt159.bottomgear.util.BGConfig;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldProvider;
-import net.minecraft.world.WorldServer;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.DimensionManager;
-import org.lwjgl.Sys;
+import tconstruct.library.accessory.IAccessory;
+import travellersgear.api.ITravellersGear;
+import travellersgear.common.items.ItemTravellersGear;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +55,25 @@ public class BottomStick extends Item {
         unlocalizedGearNames.put("boots", new ArrayList<>());
         unlocalizedGearNames.put("weapons", new ArrayList<>());
 
+        if (BGConfig.isBaublesLoaded) {
+            unlocalizedGearNames.put("baubles", new ArrayList<>());
+        }
+
+        if (BGConfig.isTravellersGearLoaded) {
+            unlocalizedGearNames.put("traveller's gear", new ArrayList<>());
+        }
+
+        if (BGConfig.isTinkersLoaded) {
+            unlocalizedGearNames.put("tinkers", new ArrayList<>());
+        }
+
+        ArrayList<ItemStack> items = new ArrayList<>();
         for (Item item : (Iterable<Item>) Item.itemRegistry) {
+            item.getSubItems(item, getCreativeTabs()[0], items);
+        }
+
+        items.forEach(itemstack -> {
+            Item item = itemstack.getItem();
             if (item instanceof ItemArmor) {
                 switch (((ItemArmor) item).armorType) {
                     case 0:
@@ -76,28 +93,38 @@ public class BottomStick extends Item {
             else if (item instanceof ItemSword || item instanceof ItemBow) {
                 unlocalizedGearNames.get("weapons").add(item.getUnlocalizedName());
             }
-        }
+            else if (BGConfig.isBaublesLoaded && item instanceof IBauble && ((IBauble) item).getBaubleType(itemstack) != null) {
+                unlocalizedGearNames.get("baubles").add(item.getUnlocalizedName());
+            }
+            else if (BGConfig.isTravellersGearLoaded && item instanceof ITravellersGear) {
+                String unlocalizedName = item.getUnlocalizedName() + "_" + ItemTravellersGear.subNames[itemstack.getItemDamage()];
+                unlocalizedGearNames.get("traveller's gear").add(unlocalizedName);
+            }
+            else if (BGConfig.isTinkersLoaded && item instanceof IAccessory) {
+                unlocalizedGearNames.get("tinkers").add(item.getUnlocalizedName());
+            }
+        });
 
         return unlocalizedGearNames;
     }
 
     public void printAllGearNames(Map<String, ArrayList<String>> unlocalizedGearNames) {
-        String output = "\nGear Type: \n";
+        StringBuilder output = new StringBuilder("\nGear Type: \n");
         for (String key : unlocalizedGearNames.keySet()) {
-            output += key + '\n';
+            output.append(key).append('\n');
             for (String unlocalizedName : unlocalizedGearNames.get(key)) {
-                output += unlocalizedName + '\n';
+                output.append(unlocalizedName).append('\n');
             }
-            output += '\n';
+            output.append('\n');
         }
         System.out.println(output);
     }
 
     public void printAllDims() {
-        String output = "\nDimensions:\n";
+        StringBuilder output = new StringBuilder("\nDimensions:\n");
         Integer[] dims = DimensionManager.getStaticDimensionIDs();
         for (Integer i : dims) {
-            output += String.format("%3d - %s\n", i, DimensionManager.getProvider(i).getDimensionName());
+            output.append(String.format("%3d - %s\n", i, DimensionManager.getProvider(i).getDimensionName()));
         }
         System.out.println(output);
     }
