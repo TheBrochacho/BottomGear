@@ -5,6 +5,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +39,7 @@ public class BottomStick extends Item {
 
         return p_77659_1_;
     }
+
 
     public Map<String, ArrayList<String>> getAllGearNames() {
         Map<String, ArrayList<String>> unlocalizedGearNames = new HashMap<>();
@@ -72,12 +75,14 @@ public class BottomStick extends Item {
     }
 
     public void printAllGearNames(Map<String, ArrayList<String>> unlocalizedGearNames) {
+        String output = "\nGear Type: \n";
         for (String key : unlocalizedGearNames.keySet()) {
-            System.out.println("Gear Type: " + key);
+            output += key + '\n';
             for (String unlocalizedName : unlocalizedGearNames.get(key)) {
-                System.out.println(unlocalizedName);
+                output += unlocalizedName + '\n';
             }
-            System.out.println();
+            output += '\n';
         }
+        System.out.println(output);
     }
 }
