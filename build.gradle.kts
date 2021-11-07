@@ -62,6 +62,7 @@ repositories {
     maven("https://gregtech.overminddl1.com/") { name = "Gregtech Maven" }
     maven("http://maven.ic2.player.to/") { name = "IC2 Maven" }
     maven("http://jenkins.usrv.eu:8081/nexus/content/repositories/releases/") { name = "UsrvDE/GTNH" }
+    maven("http://jenkins.usrv.eu:8080")
     ivy {
         name = "GTNH_Ivy_Underscore"
         artifactPattern("http://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]_[revision].[ext]")
@@ -110,7 +111,9 @@ dependencies {
     runtimeOnly("codechicken:CodeChickenLib:$codechickenlibVersion:dev")
     runtimeOnly("codechicken:CodeChickenCore:$codechickencoreVersion:dev")
     runtimeOnly("codechicken:NotEnoughItems:$neiVersion:dev")
+
     compileOnly("com.azanor.baubles:Baubles:1.7.10-1.0.1.10:deobf")
+    compileOnly("com.github.GTNewHorizons:TravellersGear:-SNAPSHOT:deobf")
 }
 sourceSets.main {
     java {
