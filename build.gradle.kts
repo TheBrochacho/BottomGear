@@ -109,7 +109,8 @@ dependencies {
     runtimeOnly("mcp.mobius.waila:Waila:$wailaVersion")
     runtimeOnly("codechicken:CodeChickenLib:$codechickenlibVersion:dev")
     runtimeOnly("codechicken:CodeChickenCore:$codechickencoreVersion:dev")
-    compile("codechicken:NotEnoughItems:$neiVersion:dev")
+    runtimeOnly("codechicken:NotEnoughItems:$neiVersion:dev")
+    compileOnly("com.azanor.baubles:Baubles:1.7.10-1.0.1.10:deobf")
 }
 sourceSets.main {
     java {
