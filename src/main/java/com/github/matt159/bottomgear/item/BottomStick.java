@@ -1,11 +1,16 @@
 package com.github.matt159.bottomgear.item;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldProvider;
+import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.DimensionManager;
 import org.lwjgl.Sys;
 
 import java.util.ArrayList;
@@ -35,11 +40,13 @@ public class BottomStick extends Item {
 
     @Override
     public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
-        printAllGearNames(getAllGearNames());
+        if (p_77659_3_.isSneaking())
+            printAllDims();
+        else
+            printAllGearNames(getAllGearNames());
 
         return p_77659_1_;
     }
-
 
     public Map<String, ArrayList<String>> getAllGearNames() {
         Map<String, ArrayList<String>> unlocalizedGearNames = new HashMap<>();
@@ -82,6 +89,15 @@ public class BottomStick extends Item {
                 output += unlocalizedName + '\n';
             }
             output += '\n';
+        }
+        System.out.println(output);
+    }
+
+    public void printAllDims() {
+        String output = "\nDimensions:\n";
+        Integer[] dims = DimensionManager.getStaticDimensionIDs();
+        for (Integer i : dims) {
+            output += String.format("%3d - %s\n", i, DimensionManager.getProvider(i).getDimensionName());
         }
         System.out.println(output);
     }
