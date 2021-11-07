@@ -112,8 +112,10 @@ dependencies {
     runtimeOnly("codechicken:CodeChickenCore:$codechickencoreVersion:dev")
     runtimeOnly("codechicken:NotEnoughItems:$neiVersion:dev")
 
+    //These mods add extra inventory slots that need to be checked
     compileOnly("com.azanor.baubles:Baubles:1.7.10-1.0.1.10:deobf")
     compileOnly("com.github.GTNewHorizons:TravellersGear:-SNAPSHOT:deobf")
+    compileOnly("com.github.GTNewHorizons:TinkersConstruct:master-SNAPSHOT:deobf")
 }
 sourceSets.main {
     java {

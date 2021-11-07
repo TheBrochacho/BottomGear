@@ -8,13 +8,20 @@ import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.io.File;
+import java.util.Set;
+
+import static cpw.mods.fml.common.Loader.instance;
+
 @Mod(modid = BottomGear.MODID, name = BottomGear.NAME, version = BottomGear.VERSION,
         dependencies = "after:Baubles; "
         + "after:TravellersGear; "
+        + "after:Tconstruct; "
     )
 public class BottomGear {
     public static final String MODID = "bottomgear";
@@ -28,6 +35,7 @@ public class BottomGear {
 
         BGConfig.isBaublesLoaded = Loader.isModLoaded("Baubles");
         BGConfig.isTravellersGearLoaded = Loader.isModLoaded("TravellersGear");
+        BGConfig.isTinkersLoaded = Loader.isModLoaded("TConstruct");
 
         MinecraftForge.EVENT_BUS.register(new PlayerListener());
         MinecraftForge.EVENT_BUS.register(new MobSpawnListener());
