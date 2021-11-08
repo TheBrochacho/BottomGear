@@ -2,21 +2,34 @@ package com.github.matt159.bottomgear.item;
 
 import baubles.api.IBauble;
 import com.github.matt159.bottomgear.util.BGConfig;
+import java.util.AbstractMap.SimpleEntry;
+
+import com.google.common.collect.BiMap;
+import cpw.mods.fml.common.FMLModContainer;
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
+import org.apache.commons.lang3.tuple.Triple;
 import tconstruct.library.accessory.IAccessory;
 import travellersgear.api.ITravellersGear;
-import travellersgear.common.items.ItemTravellersGear;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.github.matt159.bottomgear.BottomGear.MODID;
+import static cpw.mods.fml.common.registry.GameRegistry.findUniqueIdentifierFor;
 
 public class BottomStick extends Item {
 
@@ -37,6 +50,7 @@ public class BottomStick extends Item {
         return true;
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
         if (p_77659_3_.isSneaking())
@@ -44,27 +58,30 @@ public class BottomStick extends Item {
         else
             printAllGearNames(getAllGearNames());
 
+        //ItemStack test = GameRegistry.findItemStack("TravellersGear", "simpleGear", 1);
+
         return p_77659_1_;
     }
 
-    public Map<String, ArrayList<String>> getAllGearNames() {
-        Map<String, ArrayList<String>> unlocalizedGearNames = new HashMap<>();
-        unlocalizedGearNames.put("helmets", new ArrayList<>());
-        unlocalizedGearNames.put("chestplates", new ArrayList<>());
-        unlocalizedGearNames.put("leggings", new ArrayList<>());
-        unlocalizedGearNames.put("boots", new ArrayList<>());
-        unlocalizedGearNames.put("weapons", new ArrayList<>());
+    public Map<String, ArrayList<Triple<String, String, String>>> getAllGearNames() {
+        Map<String, ArrayList<Triple<String, String, String>>> GearNames = new HashMap<>();
+
+        GearNames.put("helmets", new ArrayList<>());
+        GearNames.put("chestplates", new ArrayList<>());
+        GearNames.put("leggings", new ArrayList<>());
+        GearNames.put("boots", new ArrayList<>());
+        GearNames.put("weapons", new ArrayList<>());
 
         if (BGConfig.isBaublesLoaded) {
-            unlocalizedGearNames.put("baubles", new ArrayList<>());
+            GearNames.put("baubles", new ArrayList<>());
         }
 
         if (BGConfig.isTravellersGearLoaded) {
-            unlocalizedGearNames.put("traveller's gear", new ArrayList<>());
+            GearNames.put("traveller's gear", new ArrayList<>());
         }
 
         if (BGConfig.isTinkersLoaded) {
-            unlocalizedGearNames.put("tinkers", new ArrayList<>());
+            GearNames.put("tinkers", new ArrayList<>());
         }
 
         ArrayList<ItemStack> items = new ArrayList<>();
@@ -74,46 +91,58 @@ public class BottomStick extends Item {
 
         items.forEach(itemstack -> {
             Item item = itemstack.getItem();
+            String key = null;
+
+            String uniqueName = null;
+            try {
+                uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
+            } catch (Exception e) { e.printStackTrace(); }
+            String itemID = Integer.toString(item.getDamage(itemstack));
+
             if (item instanceof ItemArmor) {
                 switch (((ItemArmor) item).armorType) {
                     case 0:
-                        unlocalizedGearNames.get("helmets").add(item.getUnlocalizedName());
+                        key = "helmets";
                         break;
                     case 1:
-                        unlocalizedGearNames.get("chestplates").add(item.getUnlocalizedName());
+                        key = "chestplates";
                         break;
                     case 2:
-                        unlocalizedGearNames.get("leggings").add(item.getUnlocalizedName());
+                        key = "leggings";
                         break;
                     case 3:
-                        unlocalizedGearNames.get("boots").add(item.getUnlocalizedName());
+                        key = "boots";
                         break;
                 }
             }
             else if (item instanceof ItemSword || item instanceof ItemBow) {
-                unlocalizedGearNames.get("weapons").add(item.getUnlocalizedName());
+                key = "weapons";
             }
             else if (BGConfig.isBaublesLoaded && item instanceof IBauble && ((IBauble) item).getBaubleType(itemstack) != null) {
-                unlocalizedGearNames.get("baubles").add(item.getUnlocalizedName());
+                key = "baubles";
             }
             else if (BGConfig.isTravellersGearLoaded && item instanceof ITravellersGear) {
-                String unlocalizedName = item.getUnlocalizedName() + "_" + ItemTravellersGear.subNames[itemstack.getItemDamage()];
-                unlocalizedGearNames.get("traveller's gear").add(unlocalizedName);
+                key = "traveller's gear";
             }
             else if (BGConfig.isTinkersLoaded && item instanceof IAccessory) {
-                unlocalizedGearNames.get("tinkers").add(item.getUnlocalizedName());
+                key = "tinkers";
+            }
+
+            if (key != null) {
+                GearNames.get(key).add(Triple.of(item.getUnlocalizedName(itemstack), uniqueName, itemID));
             }
         });
 
-        return unlocalizedGearNames;
+        return GearNames;
     }
 
-    public void printAllGearNames(Map<String, ArrayList<String>> unlocalizedGearNames) {
-        StringBuilder output = new StringBuilder("\nGear Type: \n");
-        for (String key : unlocalizedGearNames.keySet()) {
-            output.append(key).append('\n');
-            for (String unlocalizedName : unlocalizedGearNames.get(key)) {
-                output.append(unlocalizedName).append('\n');
+    public void printAllGearNames(Map<String, ArrayList<Triple<String, String, String>>> gearNames) {
+        StringBuilder output = new StringBuilder("\n#Gear Type: \n");
+        for (String key : gearNames.keySet()) {
+            output.append('#' + key + '\n');
+            for (Triple<String, String, String> value : gearNames.get(key)) {
+                output.append('#' + value.getLeft() + '\n' +
+                                value.getMiddle() + '@' + value.getRight() + "=\n\n");
             }
             output.append('\n');
         }
