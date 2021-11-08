@@ -2,13 +2,7 @@ package com.github.matt159.bottomgear.item;
 
 import baubles.api.IBauble;
 import com.github.matt159.bottomgear.util.BGConfig;
-import java.util.AbstractMap.SimpleEntry;
 
-import com.google.common.collect.BiMap;
-import cpw.mods.fml.common.FMLModContainer;
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -16,7 +10,6 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import org.apache.commons.lang3.tuple.Triple;
@@ -25,11 +18,9 @@ import travellersgear.api.ITravellersGear;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.github.matt159.bottomgear.BottomGear.MODID;
-import static cpw.mods.fml.common.registry.GameRegistry.findUniqueIdentifierFor;
 
 public class BottomStick extends Item {
 
@@ -66,22 +57,22 @@ public class BottomStick extends Item {
     public Map<String, ArrayList<Triple<String, String, String>>> getAllGearNames() {
         Map<String, ArrayList<Triple<String, String, String>>> GearNames = new HashMap<>();
 
-        GearNames.put("helmets", new ArrayList<>());
-        GearNames.put("chestplates", new ArrayList<>());
-        GearNames.put("leggings", new ArrayList<>());
-        GearNames.put("boots", new ArrayList<>());
-        GearNames.put("weapons", new ArrayList<>());
+        GearNames.put("Helmets", new ArrayList<>());
+        GearNames.put("Chestplates", new ArrayList<>());
+        GearNames.put("Leggings", new ArrayList<>());
+        GearNames.put("Boots", new ArrayList<>());
+        GearNames.put("Weapons", new ArrayList<>());
 
         if (BGConfig.isBaublesLoaded) {
-            GearNames.put("baubles", new ArrayList<>());
+            GearNames.put("Baubles", new ArrayList<>());
         }
 
         if (BGConfig.isTravellersGearLoaded) {
-            GearNames.put("traveller's gear", new ArrayList<>());
+            GearNames.put("TravellersGear", new ArrayList<>());
         }
 
         if (BGConfig.isTinkersLoaded) {
-            GearNames.put("tinkers", new ArrayList<>());
+            GearNames.put("TinkersConstruct", new ArrayList<>());
         }
 
         ArrayList<ItemStack> items = new ArrayList<>();
@@ -94,41 +85,44 @@ public class BottomStick extends Item {
             String key = null;
 
             String uniqueName = null;
-            try {
-                uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
-            } catch (Exception e) { e.printStackTrace(); }
             String itemID = Integer.toString(item.getDamage(itemstack));
 
             if (item instanceof ItemArmor) {
                 switch (((ItemArmor) item).armorType) {
                     case 0:
-                        key = "helmets";
+                        key = "Helmets";
                         break;
                     case 1:
-                        key = "chestplates";
+                        key = "Chestplates";
                         break;
                     case 2:
-                        key = "leggings";
+                        key = "Leggings";
                         break;
                     case 3:
-                        key = "boots";
+                        key = "Boots";
                         break;
                 }
             }
             else if (item instanceof ItemSword || item instanceof ItemBow) {
-                key = "weapons";
+                key = "Weapons";
             }
             else if (BGConfig.isBaublesLoaded && item instanceof IBauble && ((IBauble) item).getBaubleType(itemstack) != null) {
-                key = "baubles";
+                key = "Baubles";
             }
             else if (BGConfig.isTravellersGearLoaded && item instanceof ITravellersGear) {
-                key = "traveller's gear";
+                key = "TravellersGear";
             }
             else if (BGConfig.isTinkersLoaded && item instanceof IAccessory) {
-                key = "tinkers";
+                key = "TinkersConstruct";
             }
 
             if (key != null) {
+                try {
+                    uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 GearNames.get(key).add(Triple.of(item.getUnlocalizedName(itemstack), uniqueName, itemID));
             }
         });
