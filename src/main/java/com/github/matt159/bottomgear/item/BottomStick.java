@@ -144,10 +144,12 @@ public class BottomStick extends Item {
     }
 
     public void printAllDims() {
-        StringBuilder output = new StringBuilder("\nDimensions:\n");
+        StringBuilder output = new StringBuilder("\n#Dimensions:\n");
         Integer[] dims = DimensionManager.getStaticDimensionIDs();
         for (Integer i : dims) {
-            output.append(String.format("%3d - %s\n", i, DimensionManager.getProvider(i).getDimensionName()));
+            output.append('#' + DimensionManager.getProvider(i).getDimensionName() + '\n');
+//            DimensionManager.
+            output.append(String.format("%2d=\n", i));
         }
         System.out.println(output);
     }
