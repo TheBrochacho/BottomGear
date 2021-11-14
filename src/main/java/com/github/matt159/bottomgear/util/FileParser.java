@@ -1,10 +1,8 @@
 package com.github.matt159.bottomgear.util;
 
-import com.github.matt159.bottomgear.data.GearDimScores;
+import com.github.matt159.bottomgear.data.Scores;
 import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import scala.Int;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,7 +13,7 @@ public class FileParser {
 
     public static void parseGearConfigFile(final File gearConfigFile) throws FileNotFoundException {
         Scanner scan = new Scanner(gearConfigFile);
-        final Map<ItemStack, Integer> gearScores = GearDimScores.getInstance().getGearScores();
+        final Map<ItemStack, Integer> gearScores = Scores.getInstance().getGearScores();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -36,6 +34,20 @@ public class FileParser {
     }
 
     public static void parseDimConfigFile(final File dimConfigFile) throws FileNotFoundException {
+        Scanner scan = new Scanner(dimConfigFile);
+        final Map<Integer, Integer> dimScores = Scores.getInstance().getDimScores();
 
+        while (scan.hasNextLine()) {
+            String line = scan.nextLine();
+
+            if (line.isEmpty() || line.charAt(0) == '#') continue;
+
+            String[] dimInfo = line.split("=");
+
+            int dimID = Integer.parseInt(dimInfo[0].trim());
+            int dimScore = Integer.parseInt(dimInfo[1].trim());
+
+            dimScores.put(dimID, dimScore);
+        }
     }
 }
