@@ -148,7 +148,6 @@ public class BottomStick extends Item {
         Integer[] dims = DimensionManager.getStaticDimensionIDs();
         for (Integer i : dims) {
             output.append('#' + DimensionManager.getProvider(i).getDimensionName() + '\n');
-//            DimensionManager.
             output.append(String.format("%2d=\n", i));
         }
         System.out.println(output);

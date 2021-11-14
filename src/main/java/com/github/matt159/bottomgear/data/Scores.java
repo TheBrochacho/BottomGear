@@ -4,18 +4,20 @@ import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-public class GearDimScores {
+public class Scores {
     private static final Map<ItemStack, Integer> GEAR_SCORES = new HashMap<>();
     private static final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
+    private static final Map<UUID, Integer> PLAYER_SCORES = new HashMap<>();
 
-    private static GearDimScores INSTANCE = null;
+    private static Scores INSTANCE = null;
 
-    private GearDimScores() {}
+    private Scores() {}
 
-    public static GearDimScores getInstance() {
+    public static Scores getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new GearDimScores();
+            INSTANCE = new Scores();
         }
 
         return INSTANCE;
@@ -28,4 +30,6 @@ public class GearDimScores {
     public Map<Integer, Integer> getDimScores() {
         return DIM_SCORES;
     }
+
+    public Map<UUID, Integer> getPlayerScores() { return PLAYER_SCORES; }
 }
