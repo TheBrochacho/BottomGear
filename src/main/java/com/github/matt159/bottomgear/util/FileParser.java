@@ -13,7 +13,7 @@ public class FileParser {
 
     public static void parseGearConfigFile(final File gearConfigFile) throws FileNotFoundException {
         Scanner scan = new Scanner(gearConfigFile);
-        final Map<ItemStack, Integer> gearScores = Scores.getInstance().getGearScores();
+        final Map<String, Integer> gearScores = Scores.getInstance().getGearScores();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -27,9 +27,9 @@ public class FileParser {
             String[] itemName = itemInfo[0].split(":");
             int damageValue = Integer.parseInt(itemInfo[1]);
 
-            ItemStack item = new ItemStack(GameRegistry.findItem(itemName[0], itemName[1]), 0 , damageValue);
+            ItemStack item = new ItemStack(GameRegistry.findItem(itemName[0], itemName[1]), 1 , damageValue);
 
-            gearScores.put(item, gearScore);
+            gearScores.put(item.getUnlocalizedName(), gearScore);
         }
     }
 

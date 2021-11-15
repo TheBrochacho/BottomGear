@@ -31,21 +31,21 @@ public class PlayerListener {
 
 //        System.out.println("player tick");
 
-        ArrayList<ItemStack> equipment = new ArrayList<>();
+        ArrayList<String> equipment = new ArrayList<>();
         EntityPlayer player = (EntityPlayer) event.entity;
 
         if (!player.worldObj.isRemote) {
 
             for (ItemStack item : player.inventory.armorInventory) {
                 if (item != null) {
-                    equipment.add(item);
+                    equipment.add(item.getUnlocalizedName());
                 }
             }
 
             for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
                 ItemStack item = player.inventory.getStackInSlot(i);
                 if (item != null && (item.getItem() instanceof ItemSword || item.getItem() instanceof ItemBow)) {
-                    equipment.add(item);
+                    equipment.add(item.getUnlocalizedName());
                 }
             }
 
@@ -53,7 +53,7 @@ public class PlayerListener {
                 InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
                 for (ItemStack item : baubles.stackList) {
                     if (item != null && item.getItem() instanceof IBauble) {
-                        equipment.add(item);
+                        equipment.add(item.getUnlocalizedName());
                     }
                 }
             }
@@ -62,12 +62,12 @@ public class PlayerListener {
                 TPlayerStats tps = TPlayerStats.get(player);
                 for (ItemStack item : tps.armor.inventory) {
                     if (item != null) {
-                        equipment.add(item);
+                        equipment.add(item.getUnlocalizedName());
                     }
                 }
             }
 
-            Scores.getInstance().getPlayerScores().put(player.getUniqueID(), equipment.size());
+            Scores.getInstance().getPlayerScores().put(player.getUniqueID(), Scores.getInstance().calculateScore(equipment));
         }
     }
 }
