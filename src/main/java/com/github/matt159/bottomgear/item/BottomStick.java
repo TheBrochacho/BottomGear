@@ -135,8 +135,9 @@ public class BottomStick extends Item {
         for (String key : gearNames.keySet()) {
             output.append('#' + key + '\n');
             for (Triple<String, String, String> value : gearNames.get(key)) {
-                output.append('#' + value.getLeft() + '\n' +
-                                value.getMiddle() + '@' + value.getRight() + "=\n\n");
+                output.append(String.format("#%s\n%s@%s=1\n\n",    value.getLeft(),
+                                                                    value.getMiddle(),
+                                                                    value.getRight()));
             }
             output.append('\n');
         }
@@ -148,7 +149,7 @@ public class BottomStick extends Item {
         Integer[] dims = DimensionManager.getStaticDimensionIDs();
         for (Integer i : dims) {
             output.append('#' + DimensionManager.getProvider(i).getDimensionName() + '\n');
-            output.append(String.format("%2d=\n", i));
+            output.append(String.format("%2d=%d\n", i, Integer.MAX_VALUE));
         }
         System.out.println(output);
     }
