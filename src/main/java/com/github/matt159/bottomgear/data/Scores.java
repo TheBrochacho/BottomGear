@@ -1,12 +1,9 @@
 package com.github.matt159.bottomgear.data;
 
-import net.minecraft.item.ItemStack;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Scores {
     private static final Map<String, Integer> GEAR_SCORES = new HashMap<>();

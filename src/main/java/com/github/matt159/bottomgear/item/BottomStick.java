@@ -50,7 +50,6 @@ public class BottomStick extends Item {
             else
                 printAllGearNames(getAllGearNames());
         }
-        //ItemStack test = GameRegistry.findItemStack("TravellersGear", "simpleGear", 1);
 
         return p_77659_1_;
     }

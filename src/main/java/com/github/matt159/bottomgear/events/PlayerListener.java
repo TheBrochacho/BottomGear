@@ -29,8 +29,6 @@ public class PlayerListener {
             return;
         }
 
-//        System.out.println("player tick");
-
         ArrayList<String> equipment = new ArrayList<>();
         EntityPlayer player = (EntityPlayer) event.entity;
 
