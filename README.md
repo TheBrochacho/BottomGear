@@ -1,6 +1,7 @@
-# Forge-MDK
-[![Build Status](https://travis-ci.org/basdxz/Forge-MDK.svg?branch=1.7.10)](https://travis-ci.org/basdxz/Forge-MDK)
+# Welcome to Bottom Gear Mates
 
-A working barebones Forge MDK implementation
+Bottom Gear is a mod that gives the player another way to control mob spawns around them. Once a player reaches a configurable threshold for a given dimension, mobs will no longer spawn around that player.
 
-Made to be copied, opened with Intellij, and just work.
+Use the `bottom stick` in game to print a list of all equipment items in the players inventory to the Minecraft console. Copy-Paste that output into the `GearScores.txt` file located in `config/Bottom Gear`. You'll need to assign a value to each item listed.
+
+Crouch + Use the `bottom stick` in game to print a list of all registered dimensions to the Minecraft console. Copy-Paste that output into the `DimScores.txt` file located in `config/Bottom Gear`. You'll need to assign a value to each dimension listed.
