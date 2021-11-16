@@ -44,11 +44,12 @@ public class BottomStick extends Item {
     @SideOnly(Side.CLIENT)
     @Override
     public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_) {
-        if (p_77659_3_.isSneaking())
-            printAllDims();
-        else
-            printAllGearNames(getAllGearNames());
-
+        if (p_77659_3_.capabilities.isCreativeMode) {
+            if (p_77659_3_.isSneaking())
+                printAllDims();
+            else
+                printAllGearNames(getAllGearNames());
+        }
         //ItemStack test = GameRegistry.findItemStack("TravellersGear", "simpleGear", 1);
 
         return p_77659_1_;
