@@ -34,9 +34,20 @@ public class Scores {
 
     public int calculateScore(ArrayList<String> equipment) {
         int ret = 0;
+        StringBuilder output = new StringBuilder();
         for (String name : equipment) {
-            ret += getInstance().GEAR_SCORES.get(name);
+            Integer score = getInstance().GEAR_SCORES.get(name);
+
+            if (score != null)
+                ret += score;
+            else
+                output.append("\nCould not find item with unlocalized name: " + name);
         }
+
+        if (!output.toString().isEmpty()) {
+            System.out.println(output);
+        }
+
         return ret;
     }
 }
