@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.*;
+
 import net.minecraft.world.World;
 import net.minecraftforge.common.DimensionManager;
 import org.apache.commons.lang3.tuple.Triple;
@@ -49,6 +50,9 @@ public class BottomStick extends Item {
                 printAllDims();
             else
                 printAllGearNames(getAllGearNames());
+        }
+        else {
+            //p_77659_3_.addChatMessage();
         }
 
         return p_77659_1_;

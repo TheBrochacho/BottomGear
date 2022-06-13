@@ -1,0 +1,53 @@
+// Add any additional repositories for your dependencies here
+
+repositories {
+    maven {
+        name = "Gregtech Maven"
+        url = "https://gregtech.overminddl1.com/"
+    }
+    maven {
+        name = "IC2 Maven"
+        url = "http://maven.ic2.player.to/"
+    }
+    maven {
+        name = "UsrvDE/GTNH"
+        url = "http://jenkins.usrv.eu:8081/nexus/content/repositories/releases/"
+    }
+    maven {
+        name = "jenkins"
+        url = "http://jenkins.usrv.eu:8080"
+    }
+    maven {
+        name = "JitPack Maven"
+        url = "https://jitpack.io"
+    }
+    maven {
+        name = "appleCore Maven"
+        url = "http://www.ryanliptak.com/maven/"
+    }
+    maven {
+        name = "CodeChicken Maven"
+        url = "http://chickenbones.net/maven/"
+    }
+    maven {
+        name = "JABBA Maven"
+        url = "http://default.mobiusstrip.eu/maven"
+    }
+    maven {
+        name = "OpenComputers Maven"
+        url = "http://maven.cil.li/"
+    }
+
+    ivy {
+        name = "GTNH_Ivy_Underscore"
+        artifactPattern("http://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]_[revision].[ext]")
+    }
+    ivy {
+        artifactPattern("http://downloads.gtnewhorizons.com/Mods_for_Jenkins/[module]-[revision].[ext]")
+        name = "GTNH_Ivy_Dash"
+    }
+    ivy {
+        artifactPattern("http://www.mod-buildcraft.com/releases/BuildCraft/[revision]/[module]-[revision](-[classifier]).[ext]")
+        name = "BuildCraft_Ivy"
+    }
+}
