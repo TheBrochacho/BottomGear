@@ -3,7 +3,7 @@ package com.github.matt159.bottomgear.events;
 import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
-import com.github.matt159.bottomgear.data.Scores;
+import com.github.matt159.bottomgear.data.GearScore;
 import com.github.matt159.bottomgear.util.BGConfig;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +14,8 @@ import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import tconstruct.armor.player.TPlayerStats;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PlayerListener {
 
@@ -29,7 +31,7 @@ public class PlayerListener {
             return;
         }
 
-        ArrayList<String> equipment = new ArrayList<>();
+        Set<String> equipment = new HashSet<>();
         EntityPlayer player = (EntityPlayer) event.entity;
 
         if (!player.worldObj.isRemote) {
@@ -65,7 +67,8 @@ public class PlayerListener {
                 }
             }
 
-            Scores.getInstance().getPlayerScores().put(player.getUniqueID(), Scores.getInstance().calculateScore(equipment));
+            GearScore gs = GearScore.getInstance();
+            gs.getPlayerScores().put(player.getUniqueID(), gs.calculateScore(new ArrayList<>(equipment)));
         }
     }
 }
