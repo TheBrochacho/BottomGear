@@ -5,6 +5,7 @@ import com.github.matt159.bottomgear.events.MobSpawnListener;
 import com.github.matt159.bottomgear.events.PlayerListener;
 import com.github.matt159.bottomgear.item.BottomStick;
 import com.github.matt159.bottomgear.util.BGConfig;
+import com.github.matt159.bottomgear.commands.CommandBG;
 import com.github.matt159.bottomgear.util.FileParser;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -12,7 +13,9 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.command.CommandHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -30,6 +33,7 @@ public class BottomGear {
     public static final String VERSION = "@version@";
 
     public static final Item DEBUG_STICK = new BottomStick();
+    public static final CommandBG commandBG  = new CommandBG();
 
     private File configDirectory = null;
     private File gearConfigFile = null;
@@ -93,5 +97,11 @@ public class BottomGear {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event) {
+        CommandHandler commandHandler = (CommandHandler) event.getServer().getCommandManager();
+        commandHandler.registerCommand(commandBG);
     }
 }
