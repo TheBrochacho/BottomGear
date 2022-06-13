@@ -1,6 +1,6 @@
 package com.github.matt159.bottomgear.events;
 
-import com.github.matt159.bottomgear.data.Scores;
+import com.github.matt159.bottomgear.data.GearScore;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLiving;
@@ -15,7 +15,7 @@ public class MobSpawnListener {
         boolean earlyReturn = false;
 
         //Because mobs try to spawn on first world load before a player can tick.
-        if (Scores.getInstance().getGearScores().size() == 0) {
+        if (GearScore.getInstance().getGearScores().size() == 0) {
             event.setResult(Event.Result.DENY);
             earlyReturn = true;
         }
@@ -28,11 +28,11 @@ public class MobSpawnListener {
         EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 128);
         int dimID = mob.worldObj.provider.dimensionId;
 
-        if (player != null && Scores.getInstance().getDimScores().containsKey(dimID)) {
-            Integer playerGearScore = Scores.getInstance().getPlayerScores().get(player.getUniqueID());
+        if (player != null && GearScore.getInstance().getDimScores().containsKey(dimID)) {
+            Integer playerGearScore = GearScore.getInstance().getPlayerScores().get(player.getUniqueID());
             if (playerGearScore == null) playerGearScore = -1;
 
-            Integer dimGearThreshold = Scores.getInstance().getDimScores().get(dimID);
+            Integer dimGearThreshold = GearScore.getInstance().getDimScores().get(dimID);
 
             if (playerGearScore > dimGearThreshold) {
                 event.setResult(Event.Result.DENY);
