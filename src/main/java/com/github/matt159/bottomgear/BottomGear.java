@@ -35,9 +35,9 @@ public class BottomGear {
     public static final Item DEBUG_STICK = new BottomStick();
     public static final CommandBG commandBG  = new CommandBG();
 
-    private File configDirectory = null;
-    private File gearConfigFile = null;
-    private File dimConfigFile = null;
+    public static File configDirectory = null;
+    public static File gearConfigFile = null;
+    public static File dimConfigFile = null;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
