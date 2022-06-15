@@ -1,7 +1,7 @@
 package com.github.matt159.bottomgear.commands;
 
 import com.github.matt159.bottomgear.BottomGear;
-import com.github.matt159.bottomgear.util.FileParser;
+import com.github.matt159.bottomgear.util.FileUtil;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.util.ChatComponentText;
@@ -24,16 +24,16 @@ public class CommandReload extends SubCommand {
 
             switch (args[0]) {
                 case "gear":
-                    FileParser.parseGearConfigFile(BottomGear.gearConfigFile);
+                    FileUtil.parseGearConfigFile(BottomGear.gearConfigFile);
                     debugMessage.append("Reloaded gear scores from file.");
                     break;
                 case "dims":
-                    FileParser.parseDimConfigFile(BottomGear.dimConfigFile);
+                    FileUtil.parseDimConfigFile(BottomGear.dimConfigFile);
                     debugMessage.append("Reloaded dimension thresholds from file.");
                     break;
                 case "all":
-                    FileParser.parseGearConfigFile(BottomGear.gearConfigFile);
-                    FileParser.parseDimConfigFile(BottomGear.dimConfigFile);
+                    FileUtil.parseGearConfigFile(BottomGear.gearConfigFile);
+                    FileUtil.parseDimConfigFile(BottomGear.dimConfigFile);
                     debugMessage.append("Reloaded gear scores from file.")
                                 .append("\n")
                                 .append("Reloaded dimension thresholds from file.");
