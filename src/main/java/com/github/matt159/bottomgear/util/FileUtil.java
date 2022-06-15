@@ -47,7 +47,7 @@ public class FileUtil {
         }
     }
 
-    public static void saveGearScoresToFile(File file) throws IOException {
+    public static void saveGearScoresToFile() throws IOException {
         if (gearConfigFile.createNewFile()) {
             PrintWriter pw = new PrintWriter(gearConfigFile);
 
@@ -58,7 +58,7 @@ public class FileUtil {
         }
     }
 
-    public static void saveDimThresholdsToFile(File file) throws IOException {
+    public static void saveDimThresholdsToFile() throws IOException {
         if (dimConfigFile.createNewFile()) {
             PrintWriter pw = new PrintWriter(dimConfigFile);
 
