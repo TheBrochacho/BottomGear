@@ -1,6 +1,5 @@
 package com.github.matt159.bottomgear;
 
-import com.github.matt159.bottomgear.data.GearScore;
 import com.github.matt159.bottomgear.events.MobSpawnListener;
 import com.github.matt159.bottomgear.events.PlayerListener;
 import com.github.matt159.bottomgear.item.BottomStick;
@@ -20,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
-import java.io.PrintWriter;
 
 @Mod(modid = BottomGear.MODID, name = BottomGear.NAME, version = BottomGear.VERSION,
         dependencies = "after:Baubles; "
@@ -60,33 +58,17 @@ public class BottomGear {
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
 
-        gearConfigFile = new File(this.configDirectory, "GearScores.txt");
-        dimConfigFile = new File(this.configDirectory, "DimScores.txt");
+        gearConfigFile = new File(configDirectory, "GearScores.txt");
+        dimConfigFile = new File(configDirectory, "DimScores.txt");
 
         try {
             if (!configDirectory.exists()) {
                 configDirectory.mkdir();
             }
 
-            if (!gearConfigFile.exists()) {
-                gearConfigFile.createNewFile();
-                PrintWriter pw = new PrintWriter(gearConfigFile);
+            FileUtil.saveGearScoresToFile();
+            FileUtil.saveDimThresholdsToFile();
 
-                GearScore gs = GearScore.getInstance();
-                gs.getGearScoreList().forEach(pw::println);
-                pw.flush();
-                pw.close();
-            }
-
-            if (!dimConfigFile.exists()) {
-                dimConfigFile.createNewFile();
-                PrintWriter pw = new PrintWriter(dimConfigFile);
-
-                GearScore gs = GearScore.getInstance();
-                gs.getDimScoreList().forEach(pw::println);
-                pw.flush();
-                pw.close();
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

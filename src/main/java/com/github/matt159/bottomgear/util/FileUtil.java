@@ -4,8 +4,13 @@ import com.github.matt159.bottomgear.data.GearScore;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Scanner;
+
+import static com.github.matt159.bottomgear.BottomGear.dimConfigFile;
+import static com.github.matt159.bottomgear.BottomGear.gearConfigFile;
 
 public class FileUtil {
 
@@ -39,6 +44,28 @@ public class FileUtil {
             int dimScore = Integer.parseInt(dimInfo[1].trim());
 
             dimScores.put(dimID, dimScore);
+        }
+    }
+
+    public static void saveGearScoresToFile(File file) throws IOException {
+        if (gearConfigFile.createNewFile()) {
+            PrintWriter pw = new PrintWriter(gearConfigFile);
+
+            GearScore gs = GearScore.getInstance();
+            gs.getGearScoreList().forEach(pw::println);
+            pw.flush();
+            pw.close();
+        }
+    }
+
+    public static void saveDimThresholdsToFile(File file) throws IOException {
+        if (dimConfigFile.createNewFile()) {
+            PrintWriter pw = new PrintWriter(dimConfigFile);
+
+            GearScore gs = GearScore.getInstance();
+            gs.getDimScoreList().forEach(pw::println);
+            pw.flush();
+            pw.close();
         }
     }
 }

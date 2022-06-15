@@ -177,4 +177,16 @@ public class GearScore {
 
         return dsList;
     }
+
+    String itemStackToEntry(ItemStack itemStack) {
+        return GameRegistry.findUniqueIdentifierFor(itemStack.getItem()).toString() + "@" + itemStack.getItemDamage();
+    }
+
+    ItemStack entryToItemStack(String entry) {
+        String[] itemInfo = entry.split("@");
+        String[] itemName = itemInfo[0].split(":");
+        int damageValue = Integer.parseInt(itemInfo[1]);
+
+        return new ItemStack(GameRegistry.findItem(itemName[0], itemName[1]), 1 , damageValue);
+    }
 }
