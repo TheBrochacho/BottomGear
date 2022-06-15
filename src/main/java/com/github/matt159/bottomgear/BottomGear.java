@@ -6,7 +6,7 @@ import com.github.matt159.bottomgear.events.PlayerListener;
 import com.github.matt159.bottomgear.item.BottomStick;
 import com.github.matt159.bottomgear.util.BGConfig;
 import com.github.matt159.bottomgear.commands.CommandBG;
-import com.github.matt159.bottomgear.util.FileParser;
+import com.github.matt159.bottomgear.util.FileUtil;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -92,8 +92,8 @@ public class BottomGear {
         }
 
         try {
-            FileParser.parseGearConfigFile(gearConfigFile);
-            FileParser.parseDimConfigFile(dimConfigFile);
+            FileUtil.parseGearConfigFile(gearConfigFile);
+            FileUtil.parseDimConfigFile(dimConfigFile);
         } catch (Exception e) {
             e.printStackTrace();
         }

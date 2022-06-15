@@ -1,16 +1,13 @@
 package com.github.matt159.bottomgear.util;
 
 import com.github.matt159.bottomgear.data.GearScore;
-import cpw.mods.fml.common.registry.GameRegistry;
-import net.minecraft.item.ItemStack;
-import scala.Int;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class FileParser {
+public class FileUtil {
 
     public static void parseGearConfigFile(final File gearConfigFile) throws FileNotFoundException {
         Scanner scan = new Scanner(gearConfigFile);
