@@ -14,6 +14,8 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public class GearScore {
+    private static final int DAMAGE_VALUE = 16;
+
     private final Map<String, Integer> GEAR_SCORES = new HashMap<>();
     private final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
     private final Map<UUID, Integer> PLAYER_SCORES = new HashMap<>();
@@ -78,67 +80,74 @@ public class GearScore {
     }
 
     private Map<String, ArrayList<Triple<String, String, String>>> getAllGearInfo() {
-        Map<String, ArrayList<Triple<String, String, String>>> GearNames = new HashMap<>();
+        Map<String, ArrayList<Triple<String, String, String>>> gearNames = new HashMap<>();
 
-        GearNames.put("Helmets", new ArrayList<>());
-        GearNames.put("Chestplates", new ArrayList<>());
-        GearNames.put("Leggings", new ArrayList<>());
-        GearNames.put("Boots", new ArrayList<>());
-        GearNames.put("Weapons", new ArrayList<>());
+        gearNames.put("Helmets", new ArrayList<>());
+        gearNames.put("Chestplates", new ArrayList<>());
+        gearNames.put("Leggings", new ArrayList<>());
+        gearNames.put("Boots", new ArrayList<>());
+        gearNames.put("Weapons", new ArrayList<>());
 
         if (BGConfig.isBaublesLoaded) {
-            GearNames.put("Baubles", new ArrayList<>());
+            gearNames.put("Baubles", new ArrayList<>());
         }
 
         if (BGConfig.isTravellersGearLoaded) {
-            GearNames.put("TravellersGear", new ArrayList<>());
+            gearNames.put("TravellersGear", new ArrayList<>());
         }
 
         if (BGConfig.isTinkersLoaded) {
-            GearNames.put("TinkersConstruct", new ArrayList<>());
+            gearNames.put("TinkersConstruct", new ArrayList<>());
         }
 
-        ArrayList<ItemStack> items = new ArrayList<>();
+        // This is about the hackiest thing I've ever concieved, but it works...
+        Map<String, ItemStack> items = new HashMap<>();
         for (Item item : (Iterable<Item>) Item.itemRegistry) {
-            item.getSubItems(item, null, items);
-        }
+            String category = getItemCategory(item);
 
-        items.forEach(itemstack -> {
-            Item item = itemstack.getItem();
-            String key = null;
+            if (category == null) { continue; }
 
-            String uniqueName = null;
-            String itemID = Integer.toString(item.getDamage(itemstack));
-
-            if (item instanceof ItemArmor) {
-                String[] armorTypes = { "Helmets", "Chestplates", "Leggings", "Boots" };
-                key = armorTypes[((ItemArmor) item).armorType];
-            }
-            else if (item instanceof ItemSword || item instanceof ItemBow) {
-                key = "Weapons";
-            }
-            else if (BGConfig.isBaublesLoaded && item instanceof IBauble && ((IBauble) item).getBaubleType(itemstack) != null) {
-                key = "Baubles";
-            }
-            else if (BGConfig.isTravellersGearLoaded && item instanceof ITravellersGear) {
-                key = "TravellersGear";
-            }
-            else if (BGConfig.isTinkersLoaded && item instanceof IAccessory) {
-                key = "TinkersConstruct";
-            }
-
-            if (key != null) {
+            for (int i = 0; i < DAMAGE_VALUE; ++i) {
                 try {
-                    uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
+                    ItemStack itemStack = new ItemStack(item, 1, i);
+                    String displayName = item.getItemStackDisplayName(itemStack);
+
+                    if (!displayName.contains(".name") && !items.containsKey(displayName)) {
+                        items.put(displayName, itemStack);
+
+                        String uniqueName = null;
+                        try {
+                            uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        gearNames.get(category).add(Triple.of(displayName, uniqueName, Integer.toString(i)));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                GearNames.get(key).add(Triple.of(item.getItemStackDisplayName(itemstack), uniqueName, itemID));
             }
-        });
+        }
+        return gearNames;
+    }
 
-        return GearNames;
+    public String getItemCategory(Item item) {
+        String category = null;
+
+        if (item instanceof ItemArmor) {
+            String[] armorTypes = {"Helmets", "Chestplates", "Leggings", "Boots"};
+            category = armorTypes[((ItemArmor) item).armorType];
+        } else if (item instanceof ItemSword || item instanceof ItemBow) {
+            category = "Weapons";
+        } else if (BGConfig.isBaublesLoaded && item instanceof IBauble && ((IBauble) item).getBaubleType(new ItemStack(item)) != null) {
+            category = "Baubles";
+        } else if (BGConfig.isTravellersGearLoaded && item instanceof ITravellersGear) {
+            category = "TravellersGear";
+        } else if (BGConfig.isTinkersLoaded && item instanceof IAccessory) {
+            category = "TinkersConstruct";
+        }
+        return category;
     }
 
     public List<String> getDimScoreList() {
@@ -155,16 +164,15 @@ public class GearScore {
             e.printStackTrace();
         }
 
-        for (Integer dimID : DimensionManager.getStaticDimensionIDs()) {
-            try {
-                String dimensionName = providers.get(dimID).newInstance().getDimensionName();
-                dsList.add(String.format("#%s\n%d=%d\n",
-                        dimensionName,
-                        dimID,
-                        Integer.MAX_VALUE));
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
+        Integer[] dimIDs = DimensionManager.getStaticDimensionIDs();
+        Arrays.stream(dimIDs).forEach(id -> System.out.println(id));
+
+        for (Integer dimID : dimIDs) {
+            String dimensionName = providers.get(dimID).getName();
+            dsList.add(String.format("#%s\n%d=%d\n",
+                    dimensionName,
+                    dimID,
+                    Integer.MAX_VALUE));
         }
 
         return dsList;
