@@ -3,6 +3,7 @@ package com.github.matt159.bottomgear.util;
 import com.github.matt159.bottomgear.data.GearScore;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.item.ItemStack;
+import scala.Int;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,15 +22,8 @@ public class FileParser {
             if (line.isEmpty() || line.charAt(0) == '#') continue;
 
             String[] s = line.split("=");
-            int gearScore = Integer.parseInt(s[1]);
 
-            String[] itemInfo = s[0].split("@");
-            String[] itemName = itemInfo[0].split(":");
-            int damageValue = Integer.parseInt(itemInfo[1]);
-
-            ItemStack item = new ItemStack(GameRegistry.findItem(itemName[0], itemName[1]), 1 , damageValue);
-
-            gearScores.put(item.getUnlocalizedName(), gearScore);
+            gearScores.put(s[0], Integer.parseInt(s[1]));
         }
     }
 
