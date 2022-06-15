@@ -51,7 +51,7 @@ public abstract class SubCommand implements ICommand {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender p_71518_1_) {
+    public String getCommandUsage(ICommandSender sender) {
         return "/" + this.name + " help";
     }
 
@@ -61,7 +61,7 @@ public abstract class SubCommand implements ICommand {
     }
 
     @Override
-    public List<String> addTabCompletionOptions(ICommandSender sender, String[] p_71516_2_) {
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] args) {
         return null;
     }
 
@@ -71,7 +71,7 @@ public abstract class SubCommand implements ICommand {
     }
 
     @Override
-    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_) {
+    public boolean isUsernameIndex(String[] args, int index) {
         return false;
     }
 
