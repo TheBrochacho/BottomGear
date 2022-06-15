@@ -21,12 +21,7 @@ public abstract class SubCommand implements ICommand {
 
     protected final String name;
     protected final List<String> aliases = new ArrayList<>();
-    protected final SortedSet<SubCommand> children = new TreeSet<>(new Comparator<SubCommand>() {
-        @Override
-        public int compare(SubCommand o1, SubCommand o2) {
-            return o1.compareTo(o2);
-        }
-    });
+    protected final Map<String, SubCommand> children = new HashMap<>();
 
     protected ICommand parent;
     protected PermLevel permLevel = PermLevel.EVERYONE;
@@ -41,7 +36,7 @@ public abstract class SubCommand implements ICommand {
     
     public SubCommand addChildCommand(SubCommand child) {
         child.setParent(this);
-        children.add(child);
+        children.put(child.getCommandName(), child);
         return this;
     }
 
