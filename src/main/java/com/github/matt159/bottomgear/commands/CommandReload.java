@@ -16,7 +16,7 @@ public class CommandReload extends SubCommand {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if (args.length < 1) {
-            throw new WrongUsageException("Insufficient number of arguments.");
+            args = new String[] { "all" };
         }
 
         try {
