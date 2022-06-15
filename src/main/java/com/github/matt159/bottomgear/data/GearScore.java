@@ -100,7 +100,7 @@ public class GearScore {
             gearNames.put("TinkersConstruct", new ArrayList<>());
         }
 
-        // This is about the hackiest thing I've ever concieved, but it works...
+        // This is about the hackiest thing I've ever conceived, but it works...
         Map<String, ItemStack> items = new HashMap<>();
         for (Item item : (Iterable<Item>) Item.itemRegistry) {
             String category = getItemCategory(item);
