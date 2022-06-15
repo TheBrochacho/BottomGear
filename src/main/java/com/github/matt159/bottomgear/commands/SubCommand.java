@@ -1,0 +1,87 @@
+package com.github.matt159.bottomgear.commands;
+// largely based on:
+// https://github.com/GTNewHorizons/Railcraft/blob/master/src/main/java/mods/railcraft/common/commands/SubCommand.java
+
+import net.minecraft.command.ICommand;
+import net.minecraft.command.ICommandSender;
+
+import java.util.*;
+
+public abstract class SubCommand implements ICommand {
+    public enum PermLevel {
+        EVERYONE(0),
+        ADMIN(2);
+        
+        int permLevel;
+
+        PermLevel(int permLevel) {
+            this.permLevel = permLevel;
+        }
+    }
+
+    protected final String name;
+    protected final List<String> aliases = new ArrayList<>();
+    protected final SortedSet<SubCommand> children = new TreeSet<>(new Comparator<SubCommand>() {
+        @Override
+        public int compare(SubCommand o1, SubCommand o2) {
+            return o1.compareTo(o2);
+        }
+    });
+
+    protected ICommand parent;
+    protected PermLevel permLevel = PermLevel.EVERYONE;
+
+    public SubCommand(String name) {
+        this.name = name;
+    }
+
+    public void setParent(ICommand parent) {
+        this.parent = parent;
+    }
+    
+    public SubCommand addChildCommand(SubCommand child) {
+        child.setParent(this);
+        children.add(child);
+        return this;
+    }
+
+    public SubCommand setPermLevel(PermLevel permLevel) {
+        this.permLevel = permLevel;
+        return this;
+    }
+
+    @Override
+    public String getCommandName() {
+        return this.name;
+    }
+
+    @Override
+    public String getCommandUsage(ICommandSender p_71518_1_) {
+        return "/" + this.name + " help";
+    }
+
+    @Override
+    public List<String> getCommandAliases() {
+        return this.aliases;
+    }
+
+    @Override
+    public List<String> addTabCompletionOptions(ICommandSender sender, String[] p_71516_2_) {
+        return null;
+    }
+
+    @Override
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+        return sender.canCommandSenderUseCommand(this.permLevel.permLevel, this.name);
+    }
+
+    @Override
+    public boolean isUsernameIndex(String[] p_82358_1_, int p_82358_2_) {
+        return false;
+    }
+
+    @Override
+    public int compareTo(Object command) {
+        return this.getCommandName().compareTo(((ICommand) command).getCommandName());
+    }
+}
