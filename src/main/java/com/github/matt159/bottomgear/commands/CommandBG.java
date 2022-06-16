@@ -17,6 +17,7 @@ public class CommandBG extends CommandBase {
         aliases.add("bottomgear");
 
         children.put("reload", new CommandReload());
+        children.put("score", new CommandScore());
     }
 
     @Override
