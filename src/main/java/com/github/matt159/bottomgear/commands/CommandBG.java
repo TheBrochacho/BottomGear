@@ -19,6 +19,7 @@ public class CommandBG extends CommandBase {
         children.put("reload", new CommandReload());
         children.put("hand", new CommandSetHand());
         children.put("score", new CommandScore());
+        children.put("dim", new CommandSetDim());
     }
 
     @Override
