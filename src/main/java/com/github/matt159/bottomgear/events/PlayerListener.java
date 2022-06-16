@@ -1,6 +1,5 @@
 package com.github.matt159.bottomgear.events;
 
-import baubles.api.IBauble;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
 import com.github.matt159.bottomgear.data.GearScore;
@@ -45,13 +44,17 @@ public class PlayerListener {
 
             for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
                 ItemStack item = player.inventory.getStackInSlot(i);
-                equipment.add(BGUtil.itemStackToEntry(item));
+                if (item != null) {
+                    equipment.add(BGUtil.itemStackToEntry(item));
+                }
             }
 
             if (BGConfig.isBaublesLoaded) {
                 InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
                 for (ItemStack item : baubles.stackList) {
-                    equipment.add(BGUtil.itemStackToEntry(item));
+                    if (item != null) {
+                        equipment.add(BGUtil.itemStackToEntry(item));
+                    }
                 }
             }
 
