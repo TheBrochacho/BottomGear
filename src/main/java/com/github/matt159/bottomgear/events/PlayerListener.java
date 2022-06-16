@@ -5,6 +5,7 @@ import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
 import com.github.matt159.bottomgear.data.GearScore;
 import com.github.matt159.bottomgear.util.BGConfig;
+import com.github.matt159.bottomgear.util.BGUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -38,23 +39,19 @@ public class PlayerListener {
 
             for (ItemStack item : player.inventory.armorInventory) {
                 if (item != null) {
-                    equipment.add(item.getUnlocalizedName());
+                    equipment.add(BGUtil.itemStackToEntry(item));
                 }
             }
 
             for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
                 ItemStack item = player.inventory.getStackInSlot(i);
-                if (item != null && (item.getItem() instanceof ItemSword || item.getItem() instanceof ItemBow)) {
-                    equipment.add(item.getUnlocalizedName());
-                }
+                equipment.add(BGUtil.itemStackToEntry(item));
             }
 
             if (BGConfig.isBaublesLoaded) {
                 InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
                 for (ItemStack item : baubles.stackList) {
-                    if (item != null && item.getItem() instanceof IBauble) {
-                        equipment.add(item.getUnlocalizedName());
-                    }
+                    equipment.add(BGUtil.itemStackToEntry(item));
                 }
             }
 
@@ -62,7 +59,7 @@ public class PlayerListener {
                 TPlayerStats tps = TPlayerStats.get(player);
                 for (ItemStack item : tps.armor.inventory) {
                     if (item != null) {
-                        equipment.add(item.getUnlocalizedName());
+                        equipment.add(BGUtil.itemStackToEntry(item));
                     }
                 }
             }
