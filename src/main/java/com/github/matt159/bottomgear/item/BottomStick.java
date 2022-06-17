@@ -35,12 +35,10 @@ public class BottomStick extends Item {
     @SideOnly(Side.CLIENT)
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
-        if (!player.worldObj.isRemote) {
-            player.addChatMessage(new ChatComponentText(String.format("Current Gear Score is: %d.",
-                    GearScore.getInstance().getPlayerScores().get(player.getUniqueID()))));
-            player.addChatMessage(new ChatComponentText(String.format("The threshold for this dimension is: %d",
-                    GearScore.getInstance().getDimScores().get(world.provider.dimensionId))));
-        }
+        player.addChatMessage(new ChatComponentText(String.format("Current Gear Score is: %d.",
+                GearScore.getInstance().getPlayerScores().get(player.getUniqueID()))));
+        player.addChatMessage(new ChatComponentText(String.format("The threshold for this dimension is: %d",
+                GearScore.getInstance().getDimScores().get(world.provider.dimensionId))));
 
         return itemStack;
     }
