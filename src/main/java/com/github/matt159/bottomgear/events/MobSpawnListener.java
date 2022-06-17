@@ -15,7 +15,7 @@ public class MobSpawnListener {
         boolean earlyReturn = false;
 
         //Because mobs try to spawn on first world load before a player can tick.
-        if (GearScore.getInstance().getGearScores().size() == 0) {
+        if (GearScore.getGearScores().size() == 0) {
             event.setResult(Event.Result.DENY);
             earlyReturn = true;
         }
@@ -30,14 +30,14 @@ public class MobSpawnListener {
         EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 130);
         int dimID = mob.worldObj.provider.dimensionId;
 
-        if (player != null && GearScore.getInstance().getDimScores().containsKey(dimID)) {
-            Integer playerGearScore = GearScore.getInstance().getPlayerScores().get(player.getUniqueID());
+        if (player != null && GearScore.getDimScores().containsKey(dimID)) {
+            Integer playerGearScore = GearScore.getPlayerScores().get(player.getUniqueID());
             if (playerGearScore == null) {
                 event.setResult(Event.Result.DENY);
                 return;
             };
 
-            Integer dimGearThreshold = GearScore.getInstance().getDimScores().get(dimID);
+            Integer dimGearThreshold = GearScore.getDimScores().get(dimID);
 
             if (playerGearScore > dimGearThreshold) {
                 event.setResult(Event.Result.DENY);

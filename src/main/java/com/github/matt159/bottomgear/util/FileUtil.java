@@ -18,7 +18,7 @@ public class FileUtil {
 
     public static void parseGearConfigFile(final File gearConfigFile) throws FileNotFoundException {
         Scanner scan = new Scanner(gearConfigFile);
-        final Map<String, Integer> gearScores = GearScore.getInstance().getGearScores();
+        final Map<String, Integer> gearScores = GearScore.getGearScores();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -41,7 +41,7 @@ public class FileUtil {
 
     public static void parseDimConfigFile(final File dimConfigFile) throws FileNotFoundException {
         Scanner scan = new Scanner(dimConfigFile);
-        final Map<Integer, Integer> dimScores = GearScore.getInstance().getDimScores();
+        final Map<Integer, Integer> dimScores = GearScore.getDimScores();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -61,8 +61,7 @@ public class FileUtil {
         if (gearConfigFile.createNewFile()) {
             PrintWriter pw = new PrintWriter(gearConfigFile);
 
-            GearScore gs = GearScore.getInstance();
-            gs.getGearScoreList().forEach(pw::println);
+            GearScore.getGearScoreList().forEach(pw::println);
             pw.flush();
             pw.close();
         }
@@ -72,8 +71,7 @@ public class FileUtil {
         if (dimConfigFile.createNewFile()) {
             PrintWriter pw = new PrintWriter(dimConfigFile);
 
-            GearScore gs = GearScore.getInstance();
-            gs.getDimScoreList().forEach(pw::println);
+            GearScore.getDimScoreList().forEach(pw::println);
             pw.flush();
             pw.close();
         }

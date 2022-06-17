@@ -35,7 +35,7 @@ public class CommandSetDim extends SubCommand {
                             WorldProvider wp = sender.getEntityWorld().provider;
                             int dimID = wp.dimensionId;
 
-                            GearScore.getInstance().getDimScores().put(dimID, value);
+                            GearScore.getDimScores().put(dimID, value);
 
                             sender.addChatMessage(new ChatComponentText(String.format("Set the gear score threshold of the %s to %d",
                                     wp.getDimensionName(),
@@ -62,7 +62,7 @@ public class CommandSetDim extends SubCommand {
                         throw new WrongUsageException("Value should be greater than 0");
                     }
 
-                    GearScore.getInstance().getDimScores().put(dimID, value);
+                    GearScore.getDimScores().put(dimID, value);
                     sender.addChatMessage(new ChatComponentText(String.format("Set the gear score threshold of the %s to %d",
                             DimensionManager.getProvider(dimID).getDimensionName(),
                             value)));

@@ -36,9 +36,9 @@ public class BottomStick extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         player.addChatMessage(new ChatComponentText(String.format("Current Gear Score is: %d.",
-                GearScore.getInstance().getPlayerScores().get(player.getUniqueID()))));
+                GearScore.getPlayerScores().get(player.getUniqueID()))));
         player.addChatMessage(new ChatComponentText(String.format("The threshold for this dimension is: %d",
-                GearScore.getInstance().getDimScores().get(world.provider.dimensionId))));
+                GearScore.getDimScores().get(world.provider.dimensionId))));
 
         return itemStack;
     }

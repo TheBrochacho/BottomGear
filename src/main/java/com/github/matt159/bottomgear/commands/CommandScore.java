@@ -19,7 +19,7 @@ public class CommandScore extends SubCommand {
         if (sender instanceof EntityPlayerMP) {
             UUID uuid = ((EntityPlayerMP) sender).getUniqueID();
             sender.addChatMessage(new ChatComponentText(String.format("Your current gear score is %d.",
-                    GearScore.getInstance().getPlayerScores().get(uuid))));
+                    GearScore.getPlayerScores().get(uuid))));
         }
     }
 }

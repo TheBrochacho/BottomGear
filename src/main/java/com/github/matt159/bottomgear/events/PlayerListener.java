@@ -66,8 +66,7 @@ public class PlayerListener {
                 }
             }
 
-            GearScore gs = GearScore.getInstance();
-            gs.getPlayerScores().put(player.getUniqueID(), gs.calculateScore(new ArrayList<>(equipment)));
+            GearScore.getPlayerScores().put(player.getUniqueID(), GearScore.calculateScore(new ArrayList<>(equipment)));
         }
     }
 }

@@ -13,36 +13,26 @@ import travellersgear.api.ITravellersGear;
 import java.lang.reflect.Field;
 import java.util.*;
 
-public class GearScore {
+public final class GearScore {
     private static final int DAMAGE_VALUE = 16;
 
-    private final Map<String, Integer> GEAR_SCORES = new HashMap<>();
-    private final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
-    private final Map<UUID, Integer> PLAYER_SCORES = new HashMap<>();
-
-    private static GearScore INSTANCE = null;
+    private static final Map<String, Integer> GEAR_SCORES = new HashMap<>();
+    private static final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
+    private static final Map<UUID, Integer> PLAYER_SCORES = new HashMap<>();
 
     private GearScore() {}
 
-    public static GearScore getInstance() {
-        if (INSTANCE == null) {
-            INSTANCE = new GearScore();
-        }
-
-        return INSTANCE;
-    }
-
-    public Map<String, Integer> getGearScores() {
+    public static Map<String, Integer> getGearScores() {
         return GEAR_SCORES;
     }
 
-    public Map<Integer, Integer> getDimScores() {
+    public static Map<Integer, Integer> getDimScores() {
         return DIM_SCORES;
     }
 
-    public Map<UUID, Integer> getPlayerScores() { return PLAYER_SCORES; }
+    public static Map<UUID, Integer> getPlayerScores() { return PLAYER_SCORES; }
 
-    public int calculateScore(List<String> equipment) {
+    public static int calculateScore(List<String> equipment) {
         int ret = 0;
         StringBuilder output = new StringBuilder();
         for (String name : equipment) {
@@ -61,7 +51,7 @@ public class GearScore {
         return ret;
     }
 
-    public List<String> getGearScoreList() {
+    public static List<String> getGearScoreList() {
         Map<String, ArrayList<Triple<String, String, String>>> gearInfo = getAllGearInfo();
 
         List<String> gsList = new ArrayList<>();
@@ -79,7 +69,7 @@ public class GearScore {
         return gsList;
     }
 
-    private Map<String, ArrayList<Triple<String, String, String>>> getAllGearInfo() {
+    private static Map<String, ArrayList<Triple<String, String, String>>> getAllGearInfo() {
         Map<String, ArrayList<Triple<String, String, String>>> gearNames = new HashMap<>();
 
         gearNames.put("Helmets", new ArrayList<>());
@@ -132,7 +122,7 @@ public class GearScore {
         return gearNames;
     }
 
-    public String getItemCategory(Item item) {
+    public static String getItemCategory(Item item) {
         String category = null;
 
         if (item instanceof ItemArmor) {
@@ -150,7 +140,7 @@ public class GearScore {
         return category;
     }
 
-    public List<String> getDimScoreList() {
+    public static List<String> getDimScoreList() {
         List<String> dsList = new ArrayList<>();
 
         Hashtable<Integer, Class<? extends WorldProvider>> providers = null;
