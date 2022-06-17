@@ -1,6 +1,5 @@
 package com.github.matt159.bottomgear.commands;
 
-import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -8,18 +7,19 @@ import net.minecraft.util.ChatComponentText;
 
 import java.util.*;
 
-public class CommandBG extends CommandBase {
-    private final Map<String, SubCommand> children = new HashMap<>();
-    private final List<String> aliases = new ArrayList<>();
+public class CommandBG extends SubCommand {
 
     public CommandBG() {
+        super("bottomgear");
+        setPermLevel(PermLevel.EVERYONE);
+
         aliases.add("bg");
         aliases.add("bottomgear");
 
-        children.put("reload", new CommandReload());
-        children.put("hand", new CommandSetHand());
-        children.put("score", new CommandScore());
-        children.put("dim", new CommandSetDim());
+        addChildCommand(new CommandReload());
+        addChildCommand(new CommandSetHand());
+        addChildCommand(new CommandScore());
+        addChildCommand(new CommandSetDim());
     }
 
     @Override
@@ -28,13 +28,7 @@ public class CommandBG extends CommandBase {
     }
 
     @Override
-    @SuppressWarnings("rawtypes")
-    public List getCommandAliases() {
-        return aliases;
-    }
-
-    @Override
-    public String getCommandUsage(ICommandSender p_71518_1_) {
+    public String getCommandUsage(ICommandSender sender) {
         return getCommandName() + " help";
     }
 
