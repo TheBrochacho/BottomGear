@@ -25,7 +25,9 @@ public class MobSpawnListener {
         }
 
         EntityLiving mob = (EntityLiving) event.entity;
-        EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 128);
+        //range check is 130 instead of 128 because a spider spawn was occasionally happening due to spiders having
+        //a size of 2x2 blocks
+        EntityPlayer player = mob.worldObj.getClosestPlayer(event.x, event.y, event.z, 130);
         int dimID = mob.worldObj.provider.dimensionId;
 
         if (player != null && GearScore.getInstance().getDimScores().containsKey(dimID)) {
