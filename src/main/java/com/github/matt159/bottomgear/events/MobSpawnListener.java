@@ -32,7 +32,10 @@ public class MobSpawnListener {
 
         if (player != null && GearScore.getInstance().getDimScores().containsKey(dimID)) {
             Integer playerGearScore = GearScore.getInstance().getPlayerScores().get(player.getUniqueID());
-            if (playerGearScore == null) playerGearScore = -1;
+            if (playerGearScore == null) {
+                event.setResult(Event.Result.DENY);
+                return;
+            };
 
             Integer dimGearThreshold = GearScore.getInstance().getDimScores().get(dimID);
 
