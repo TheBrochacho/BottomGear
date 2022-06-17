@@ -28,9 +28,7 @@ public class CommandSetHand extends SubCommand {
                 if (sender instanceof EntityPlayerMP) {
                     ItemStack itemStack = ((EntityPlayerMP) sender).getCurrentEquippedItem();
 
-                    String uniqueName = BGUtil.itemStackToEntry(itemStack);
-
-                    GearScore.getInstance().getGearScores().put(uniqueName, value);
+                    GearScore.getInstance().getGearScores().put(itemStack.getDisplayName(), value);
 
                     sender.addChatMessage(new ChatComponentText(String.format("Set the gear score of %s to %d.",
                             itemStack.getDisplayName(),

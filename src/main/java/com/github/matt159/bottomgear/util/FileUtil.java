@@ -1,6 +1,8 @@
 package com.github.matt159.bottomgear.util;
 
 import com.github.matt159.bottomgear.data.GearScore;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,8 +26,16 @@ public class FileUtil {
             if (line.isEmpty() || line.charAt(0) == '#') continue;
 
             String[] s = line.split("=");
+            int gearScore = Integer.parseInt(s[1]);
 
-            gearScores.put(s[0], Integer.parseInt(s[1]));
+            String[] s1 = s[0].split("@");
+            String unlocalizedName = s1[0];
+            int damageValue = Integer.parseInt(s1[1]);
+
+            Item item = (Item) Item.itemRegistry.getObject(unlocalizedName);
+            ItemStack itemStack = new ItemStack(item, 1, damageValue);
+
+            gearScores.put(itemStack.getDisplayName(), gearScore);
         }
     }
 

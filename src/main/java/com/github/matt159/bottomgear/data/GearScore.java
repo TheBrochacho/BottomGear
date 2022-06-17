@@ -51,7 +51,7 @@ public class GearScore {
             if (score != null)
                 ret += score;
             else
-                output.append("\nCould not find item with unlocalized name: ").append(name);
+                output.append("\nCould not find item with name: ").append(name);
         }
 
         if (!output.toString().isEmpty()) {
