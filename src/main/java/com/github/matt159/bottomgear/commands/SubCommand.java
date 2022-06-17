@@ -60,6 +60,10 @@ public abstract class SubCommand implements ICommand {
         return this.aliases;
     }
 
+    public Map<String, SubCommand> getChildren() {
+        return children;
+    }
+
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args) {
         return null;
