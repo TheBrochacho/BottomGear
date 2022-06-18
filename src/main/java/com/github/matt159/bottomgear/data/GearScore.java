@@ -14,7 +14,9 @@ import java.lang.reflect.Field;
 import java.util.*;
 
 public final class GearScore {
-    private static final int DAMAGE_VALUE = 16;
+    private static final int DAMAGE_VALUE = Short.MAX_VALUE;
+
+    private static final Map<String, Set<Integer>> EQUIPABLE_ITEMS = new HashMap<>();
 
     private static final Map<String, Integer> GEAR_SCORES = new HashMap<>();
     private static final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
@@ -31,6 +33,10 @@ public final class GearScore {
     }
 
     public static Map<UUID, Integer> getPlayerScores() { return PLAYER_SCORES; }
+
+    public static Map<String, Set<Integer>> getEquipableItems() {
+        return EQUIPABLE_ITEMS;
+    }
 
     public static int calculateScore(List<String> equipment) {
         int ret = 0;
@@ -91,7 +97,7 @@ public final class GearScore {
         }
 
         // This is about the hackiest thing I've ever conceived, but it works...
-        Map<String, ItemStack> items = new HashMap<>();
+        Set<String> displayNames = new HashSet<>();
         for (Item item : (Iterable<Item>) Item.itemRegistry) {
             String category = getItemCategory(item);
 
@@ -102,8 +108,7 @@ public final class GearScore {
                     ItemStack itemStack = new ItemStack(item, 1, i);
                     String displayName = item.getItemStackDisplayName(itemStack);
 
-                    if (!displayName.contains(".name") && !items.containsKey(displayName)) {
-                        items.put(displayName, itemStack);
+                    if (!displayName.contains(".name") && displayNames.add(displayName)) {
 
                         String uniqueName = null;
                         try {
@@ -112,6 +117,7 @@ public final class GearScore {
                             e.printStackTrace();
                         }
 
+                        addEquipableItem(uniqueName, i);
                         gearNames.get(category).add(Triple.of(displayName, uniqueName, Integer.toString(i)));
                     }
                 } catch (Exception e) {
@@ -138,6 +144,14 @@ public final class GearScore {
             category = "TinkersConstruct";
         }
         return category;
+    }
+
+    private static boolean addEquipableItem(String ui, int damageValue) {
+        if (!EQUIPABLE_ITEMS.containsKey(ui)) {
+            EQUIPABLE_ITEMS.put(ui, new HashSet<>());
+        }
+
+        return EQUIPABLE_ITEMS.get(ui).add(damageValue);
     }
 
     public static List<String> getDimScoreList() {
