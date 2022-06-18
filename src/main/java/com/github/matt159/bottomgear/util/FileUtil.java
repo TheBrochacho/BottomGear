@@ -58,13 +58,11 @@ public class FileUtil {
     }
 
     public static void saveGearScoresToFile() throws IOException {
-        if (gearConfigFile.createNewFile()) {
-            PrintWriter pw = new PrintWriter(gearConfigFile);
+        PrintWriter pw = new PrintWriter(gearConfigFile);
 
-            GearScore.getGearScoreList().forEach(pw::println);
-            pw.flush();
-            pw.close();
-        }
+        GearScore.getGearScoreList().forEach(pw::println);
+        pw.flush();
+        pw.close();
     }
 
     public static void saveDimThresholdsToFile() throws IOException {
