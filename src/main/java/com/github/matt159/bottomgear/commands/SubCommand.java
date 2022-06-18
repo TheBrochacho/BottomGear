@@ -67,6 +67,15 @@ public abstract class SubCommand extends CommandBase implements ICommand {
 
     @Override
     public List<String> addTabCompletionOptions(ICommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return new ArrayList<>(getChildren().keySet());
+        } else {
+            if (children.containsKey(args[0])) {
+                String[] newArgs = new String[args.length - 1];
+                System.arraycopy(args, 1, newArgs, 0, newArgs.length);
+                return children.get(args[0]).addTabCompletionOptions(sender, newArgs);
+            }
+        }
         return null;
     }
 
