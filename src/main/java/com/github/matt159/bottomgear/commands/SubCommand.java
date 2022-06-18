@@ -2,12 +2,13 @@ package com.github.matt159.bottomgear.commands;
 // largely based on:
 // https://github.com/GTNewHorizons/Railcraft/blob/master/src/main/java/mods/railcraft/common/commands/SubCommand.java
 
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 
 import java.util.*;
 
-public abstract class SubCommand implements ICommand {
+public abstract class SubCommand extends CommandBase implements ICommand {
     public enum PermLevel {
         EVERYONE(0),
         ADMIN(2);
