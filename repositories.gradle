@@ -37,6 +37,14 @@ repositories {
         name = "OpenComputers Maven"
         url = "http://maven.cil.li/"
     }
+    maven {
+        name = "gtmega"
+        url = "https://gtmega.falsepattern.com/"
+    }
+    maven {
+        name = "mavenpattern"
+        url = "https://maven.falsepattern.com/"
+    }
 
     ivy {
         name = "GTNH_Ivy_Underscore"
