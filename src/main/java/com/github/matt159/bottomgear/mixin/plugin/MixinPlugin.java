@@ -4,12 +4,15 @@ import com.falsepattern.lib.mixin.IMixin;
 import com.falsepattern.lib.mixin.IMixinPlugin;
 import com.falsepattern.lib.mixin.ITargetedMod;
 import com.github.matt159.bottomgear.Tags;
-import lombok.Getter;
 import org.apache.logging.log4j.Logger;
 
 public class MixinPlugin implements IMixinPlugin {
-    @Getter
     private static final Logger logger = IMixinPlugin.createLogger(Tags.MODNAME);
+
+    @Override
+    public Logger getLogger() {
+        return logger;
+    }
 
     @Override
     public ITargetedMod[] getTargetedModEnumValues() {
