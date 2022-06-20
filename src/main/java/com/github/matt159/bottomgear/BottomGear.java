@@ -48,6 +48,7 @@ public class BottomGear {
         BGConfig.isBaublesLoaded = Loader.isModLoaded("Baubles");
         BGConfig.isTravellersGearLoaded = Loader.isModLoaded("TravellersGear");
         BGConfig.isTinkersLoaded = Loader.isModLoaded("TConstruct");
+        BGConfig.isDWSLoaded = Loader.isModLoaded("dws");
 
         MinecraftForge.EVENT_BUS.register(new PlayerListener());
         MinecraftForge.EVENT_BUS.register(new MobSpawnListener());

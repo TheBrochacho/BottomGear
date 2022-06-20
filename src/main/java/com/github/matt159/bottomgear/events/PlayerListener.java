@@ -42,7 +42,15 @@ public class PlayerListener {
             }
 
             for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
-                ItemStack itemStack = player.inventory.getStackInSlot(i);
+                //compatibility with dws
+                ItemStack itemStack;
+                if (i >= 9 && BGConfig.isDWSLoaded) {
+                    itemStack = player.inventory.getStackInSlot(i + 54);
+                }
+                else {
+                    itemStack = player.inventory.getStackInSlot(i);
+                }
+
                 if (itemStack != null) {
                     equipment.add(itemStack.getDisplayName());
                 }

@@ -6,4 +6,5 @@ public class BGConfig extends Configuration {
     public static boolean isBaublesLoaded;
     public static boolean isTravellersGearLoaded;
     public static boolean isTinkersLoaded;
+    public static boolean isDWSLoaded;
 }
