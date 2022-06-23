@@ -1,23 +1,20 @@
 package com.github.matt159.bottomgear.util;
 
+import com.github.matt159.bottomgear.BottomGear;
 import com.github.matt159.bottomgear.data.GearScore;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Scanner;
 
-import static com.github.matt159.bottomgear.BottomGear.dimConfigFile;
-import static com.github.matt159.bottomgear.BottomGear.gearConfigFile;
-
 public class FileUtil {
 
-    public static void parseGearConfigFile(final File gearConfigFile) throws FileNotFoundException {
-        Scanner scan = new Scanner(gearConfigFile);
+    public static void parseGearConfigFile() throws FileNotFoundException {
+        Scanner scan = new Scanner(BottomGear.gearConfigFile);
         final Map<String, Integer> gearScores = GearScore.getGearScores();
 
         while (scan.hasNextLine()) {
@@ -39,8 +36,8 @@ public class FileUtil {
         }
     }
 
-    public static void parseDimConfigFile(final File dimConfigFile) throws FileNotFoundException {
-        Scanner scan = new Scanner(dimConfigFile);
+    public static void parseDimConfigFile() throws FileNotFoundException {
+        Scanner scan = new Scanner(BottomGear.dimConfigFile);
         final Map<Integer, Integer> dimScores = GearScore.getDimScores();
 
         while (scan.hasNextLine()) {
@@ -58,7 +55,7 @@ public class FileUtil {
     }
 
     public static void saveGearScoresToFile() throws IOException {
-        PrintWriter pw = new PrintWriter(gearConfigFile);
+        PrintWriter pw = new PrintWriter(BottomGear.gearConfigFile);
 
         GearScore.getGearScoreList().forEach(pw::println);
         pw.flush();
@@ -66,12 +63,10 @@ public class FileUtil {
     }
 
     public static void saveDimThresholdsToFile() throws IOException {
-        if (dimConfigFile.createNewFile()) {
-            PrintWriter pw = new PrintWriter(dimConfigFile);
+        PrintWriter pw = new PrintWriter(BottomGear.dimConfigFile);
 
-            GearScore.getDimScoreList().forEach(pw::println);
-            pw.flush();
-            pw.close();
-        }
+        GearScore.getDimScoreList().forEach(pw::println);
+        pw.flush();
+        pw.close();
     }
 }
