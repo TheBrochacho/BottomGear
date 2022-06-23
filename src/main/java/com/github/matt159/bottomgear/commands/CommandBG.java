@@ -16,7 +16,6 @@ public class CommandBG extends SubCommand {
         setPermLevel(PermLevel.EVERYONE);
 
         aliases.add("bg");
-        aliases.add("bottomgear");
 
         addChildCommand(new CommandReload());
         addChildCommand(new CommandSetHand());
