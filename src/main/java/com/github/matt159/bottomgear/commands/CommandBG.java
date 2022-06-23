@@ -18,9 +18,11 @@ public class CommandBG extends SubCommand {
         aliases.add("bg");
 
         addChildCommand(new CommandReload());
+        addChildCommand(new CommandSave());
         addChildCommand(new CommandSetHand());
         addChildCommand(new CommandScore());
         addChildCommand(new CommandSetDim());
+        addChildCommand(new CommandSetScore());
     }
 
     @Override
