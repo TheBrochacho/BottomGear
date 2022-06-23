@@ -18,8 +18,6 @@ import net.minecraft.command.CommandHandler;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
-import java.io.File;
-
 @Mod(modid = BottomGear.MODID, name = BottomGear.NAME, version = BottomGear.VERSION,
         dependencies = "after:Baubles; "
         + "after:TravellersGear; "
@@ -31,15 +29,12 @@ public class BottomGear {
     public static final String VERSION = "@version@";
 
     public static final Item DEBUG_STICK = new BottomStick();
-    public static final CommandBG commandBG  = new CommandBG();
+    public static final CommandBG commandBG = new CommandBG();
 
-    public static File configDirectory = null;
-    public static File gearConfigFile = null;
-    public static File dimConfigFile = null;
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        configDirectory = new File(event.getModConfigurationDirectory().getPath(), "BottomGear");
+        FileUtil.onPreInit(event);
     }
 
     @EventHandler
@@ -58,28 +53,7 @@ public class BottomGear {
 
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
-
-        gearConfigFile = new File(configDirectory, "GearScores.txt");
-        dimConfigFile = new File(configDirectory, "DimScores.txt");
-
-        try {
-            if (!configDirectory.exists()) {
-                configDirectory.mkdir();
-            }
-
-            FileUtil.saveGearScoresToFile();
-            FileUtil.saveDimThresholdsToFile();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            FileUtil.parseGearConfigFile(gearConfigFile);
-            FileUtil.parseDimConfigFile(dimConfigFile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        FileUtil.onLoadComplete();
     }
 
     @EventHandler
