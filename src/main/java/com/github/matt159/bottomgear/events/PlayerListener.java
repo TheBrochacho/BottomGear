@@ -4,6 +4,7 @@ import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
 import com.github.matt159.bottomgear.data.GearScore;
 import com.github.matt159.bottomgear.util.BGConfig;
+import com.github.matt159.bottomgear.util.BGUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -12,9 +13,11 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import tconstruct.armor.player.TPlayerStats;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class PlayerListener {
 
@@ -30,51 +33,42 @@ public class PlayerListener {
             return;
         }
 
-        Set<String> equipment = new HashSet<>();
+        Set<ItemStack> equipment = new HashSet<>();
         EntityPlayer player = (EntityPlayer) event.entity;
 
         if (!player.worldObj.isRemote) {
 
-            for (ItemStack itemStack : player.inventory.armorInventory) {
-                if (itemStack != null) {
-                    equipment.add(itemStack.getDisplayName());
-                }
-            }
+            equipment.addAll(Arrays.asList(player.inventory.armorInventory));
 
             for (int i = 0; i < InventoryPlayer.getHotbarSize(); ++i) {
                 //compatibility with dws
-                ItemStack itemStack;
+                ItemStack itemStack = null;
                 if (i >= 9 && BGConfig.isDWSLoaded) {
                     itemStack = player.inventory.getStackInSlot(i + 54);
                 }
                 else {
                     itemStack = player.inventory.getStackInSlot(i);
                 }
-
-                if (itemStack != null) {
-                    equipment.add(itemStack.getDisplayName());
-                }
+                equipment.add(itemStack);
             }
 
             if (BGConfig.isBaublesLoaded) {
                 InventoryBaubles baubles = PlayerHandler.getPlayerBaubles(player);
-                for (ItemStack itemStack : baubles.stackList) {
-                    if (itemStack != null) {
-                        equipment.add(itemStack.getDisplayName());
-                    }
-                }
+                equipment.addAll(Arrays.asList(baubles.stackList));
             }
 
             if (BGConfig.isTinkersLoaded) {
                 TPlayerStats tps = TPlayerStats.get(player);
-                for (ItemStack itemStack : tps.armor.inventory) {
-                    if (itemStack != null) {
-                        equipment.add(itemStack.getDisplayName());
-                    }
-                }
+                equipment.addAll(Arrays.asList(tps.armor.inventory));
             }
 
-            GearScore.getPlayerScores().put(player.getUniqueID(), GearScore.calculateScore(new ArrayList<>(equipment)));
+            GearScore.getPlayerScores().put(
+                    player.getUniqueID(),
+                    GearScore.calculateScore(equipment.stream()
+                            .filter(Objects::nonNull)
+                            .map(BGUtil::itemStackToEntry)
+                            .distinct()
+                            .collect(Collectors.toList())));
         }
     }
 }
