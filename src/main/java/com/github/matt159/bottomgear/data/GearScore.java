@@ -75,56 +75,24 @@ public final class GearScore {
         return gsList;
     }
 
-    private static Map<String, ArrayList<Triple<String, String, String>>> getAllGearInfo() {
-        Map<String, ArrayList<Triple<String, String, String>>> gearNames = new HashMap<>();
+    private static Map<String, ArrayList<Triple<String, String, Integer>>> getAllGearInfo() {
+        Map<String, ArrayList<Triple<String, String, Integer>>> gearNames = new HashMap<>();
+        GEAR_SCORES.forEach((key, value) -> {
+            ItemStack itemStack = BGUtil.entryToItemStack(key);
+            String category = EquipmentCategory.getItemCategory(itemStack.getItem());
 
-        gearNames.put("Helmets", new ArrayList<>());
-        gearNames.put("Chestplates", new ArrayList<>());
-        gearNames.put("Leggings", new ArrayList<>());
-        gearNames.put("Boots", new ArrayList<>());
-        gearNames.put("Weapons", new ArrayList<>());
-
-        if (BGConfig.isBaublesLoaded) {
-            gearNames.put("Baubles", new ArrayList<>());
-        }
-
-        if (BGConfig.isTravellersGearLoaded) {
-            gearNames.put("TravellersGear", new ArrayList<>());
-        }
-
-        if (BGConfig.isTinkersLoaded) {
-            gearNames.put("TinkersConstruct", new ArrayList<>());
-        }
-
-        // This is about the hackiest thing I've ever conceived, but it works...
-        Set<String> displayNames = new HashSet<>();
-        for (Item item : (Iterable<Item>) Item.itemRegistry) {
-            String category = getItemCategory(item);
-
-            if (category == null) { continue; }
-
-            for (int i = 0; i < DAMAGE_VALUE; ++i) {
-                try {
-                    ItemStack itemStack = new ItemStack(item, 1, i);
-                    String displayName = item.getItemStackDisplayName(itemStack);
-
-                    if (!displayName.contains(".name") && displayNames.add(displayName)) {
-
-                        String uniqueName = null;
-                        try {
-                            uniqueName = GameRegistry.findUniqueIdentifierFor(item).toString();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        addEquipableItem(uniqueName, i);
-                        gearNames.get(category).add(Triple.of(displayName, uniqueName, Integer.toString(i)));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            if (!gearNames.containsKey(category)) {
+                gearNames.put(category, new ArrayList<>());
             }
-        }
+
+            gearNames.get(category)
+                    .add(Triple.of(
+                            itemStack.getDisplayName(),
+                            key,
+                            value
+                    ));
+        });
+
         return gearNames;
     }
 

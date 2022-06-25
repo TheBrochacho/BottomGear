@@ -1,5 +1,6 @@
 package com.github.matt159.bottomgear;
 
+import com.github.matt159.bottomgear.data.EquipmentCategory;
 import com.github.matt159.bottomgear.events.MobSpawnListener;
 import com.github.matt159.bottomgear.events.PlayerListener;
 import com.github.matt159.bottomgear.item.BottomStick;
@@ -53,6 +54,7 @@ public class BottomGear {
 
     @EventHandler
     public void loadComplete(FMLLoadCompleteEvent event) {
+        EquipmentCategory.init();
         FileUtil.onLoadComplete();
     }
 
