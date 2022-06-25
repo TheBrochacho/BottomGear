@@ -51,6 +51,7 @@ public final class FileUtil {
     public static void parseGearConfigFile() throws FileNotFoundException {
         Scanner scan = new Scanner(gearConfigFile);
         final Map<String, Integer> gearScores = GearScore.getGearScores();
+        gearScores.clear();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
@@ -68,6 +69,7 @@ public final class FileUtil {
     public static void parseDimConfigFile() throws FileNotFoundException {
         Scanner scan = new Scanner(dimConfigFile);
         final Map<Integer, Integer> dimScores = GearScore.getDimScores();
+        dimScores.clear();
 
         while (scan.hasNextLine()) {
             String line = scan.nextLine();
