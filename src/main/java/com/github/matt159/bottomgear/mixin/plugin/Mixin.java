@@ -22,7 +22,6 @@ public enum Mixin implements IMixin {
     // Replace with your own mixins:
 
     //Vanilla minecraft is implicitly defined as a dependency, no need to explicitly declare it
-    ItemEditableBookMixin(Side.COMMON, always(), "minecraft.RegistryNamespacedMixin"),
 
     // The modFilter argument is a predicate, so you can also use the .and(), .or(), and .negate() methods to mix and match multiple predicates.
     ;

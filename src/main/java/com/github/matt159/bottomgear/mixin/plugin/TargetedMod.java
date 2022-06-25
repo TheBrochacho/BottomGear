@@ -18,7 +18,8 @@ public enum TargetedMod implements ITargetedMod {
     //
 
     // Replace with your injected mods here:
-    GREGTECH("GregTech", false, startsWith("gregtech").or(startsWith("gt5u")));
+    // GREGTECH("GregTech", false, startsWith("gregtech").or(startsWith("gt5u")))
+    ;
 
     @Getter
     public final String modName;
