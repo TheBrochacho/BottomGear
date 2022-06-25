@@ -20,19 +20,19 @@ public class CommandSave extends SubCommand {
         try {
             switch (args[0]) {
                 case "gear":
-                    sender.addChatMessage(new ChatComponentText("Saved gear scores to file."));
                     FileUtil.saveGearScoresToFile();
+                    sender.addChatMessage(new ChatComponentText("Saved gear scores to file."));
                     break;
                 case "dims":
-                    sender.addChatMessage(new ChatComponentText("Saved dimension thresholds to file."));
                     FileUtil.saveDimThresholdsToFile();
+                    sender.addChatMessage(new ChatComponentText("Saved dimension thresholds to file."));
                     break;
                 case "all":
-                    sender.addChatMessage(new ChatComponentText("Saved gear scores to file."));
                     FileUtil.saveGearScoresToFile();
+                    sender.addChatMessage(new ChatComponentText("Saved gear scores to file."));
 
-                    sender.addChatMessage(new ChatComponentText("Saved dimension thresholds to file."));
                     FileUtil.saveDimThresholdsToFile();
+                    sender.addChatMessage(new ChatComponentText("Saved dimension thresholds to file."));
                     break;
                 default:
                     throw new WrongUsageException("Options are \"gear\", \"dims\" or \"all\"");
