@@ -2,7 +2,6 @@ package com.github.matt159.bottomgear.util;
 
 import com.github.matt159.bottomgear.data.GearScore;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import net.minecraft.item.ItemStack;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -59,10 +58,9 @@ public final class FileUtil {
             if (line.isEmpty() || line.charAt(0) == '#') continue;
 
             String[] s = line.split("=");
-            ItemStack itemStack = BGUtil.entryToItemStack(s[0]);
             int gearScore = Integer.parseInt(s[1]);
 
-            gearScores.put(itemStack.getDisplayName(), gearScore);
+            gearScores.put(s[0], gearScore);
         }
     }
 
