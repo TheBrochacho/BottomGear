@@ -11,4 +11,10 @@ public class BGUtil {
 
         return new ItemStack(GameRegistry.findItem(itemName[0], itemName[1]), 1 , damageValue);
     }
+
+    public static String itemStackToEntry(ItemStack itemStack) {
+        return String.format("%s@%d",
+                GameRegistry.findUniqueIdentifierFor(itemStack.getItem()),
+                itemStack.getItemDamage());
+    }
 }
