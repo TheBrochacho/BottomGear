@@ -1,6 +1,7 @@
 package com.github.matt159.bottomgear.commands;
 
 import com.github.matt159.bottomgear.data.GearScore;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -21,8 +22,7 @@ public class CommandSetScore extends SubCommand {
         switch (args.length) {
             case 1:
                 if ("help".equalsIgnoreCase(args[0])) {
-                    StringBuilder helpMessage = new StringBuilder();
-                    helpMessage.append("");
+                    sender.addChatMessage(new ChatComponentText("\"/bg set <unlocalized item name> <damage value> <gear score>\""));
                 } else {
                     throw new WrongUsageException("Too few arguments");
                 }
