@@ -1,6 +1,7 @@
 package com.github.matt159.bottomgear.events;
 
 import com.github.matt159.bottomgear.data.GearScore;
+import com.github.matt159.bottomgear.data.PlayerScore;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.EntityLiving;
@@ -31,7 +32,7 @@ public class MobSpawnListener {
         int dimID = mob.worldObj.provider.dimensionId;
 
         if (player != null && GearScore.getDimScores().containsKey(dimID)) {
-            Integer playerGearScore = GearScore.getPlayerScores().get(player.getUniqueID());
+            Integer playerGearScore = PlayerScore.get(player.getUniqueID());
             if (playerGearScore == null) {
                 event.setResult(Event.Result.DENY);
                 return;

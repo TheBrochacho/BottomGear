@@ -14,7 +14,6 @@ public final class GearScore {
 
     private static final Map<String, Integer> GEAR_SCORES = new TreeMap<>();
     private static final Map<Integer, Integer> DIM_SCORES = new HashMap<>();
-    private static final Map<UUID, Integer> PLAYER_SCORES = new HashMap<>();
 
     public static Map<String, Integer> getGearScores() {
         return GEAR_SCORES;
@@ -24,26 +23,11 @@ public final class GearScore {
         return DIM_SCORES;
     }
 
-    public static Map<UUID, Integer> getPlayerScores() {
-        return PLAYER_SCORES;
-    }
-
     public static int calculateScore(List<String> equipment) {
-        int ret = 0;
-        StringBuilder output = new StringBuilder();
-        for (String name : equipment) {
-            if (GEAR_SCORES.containsKey(name)) {
-                ret += GEAR_SCORES.get(name);
-            } else {
-//                output.append("\nCould not find item with name: ").append(name);
-            }
-        }
-
-        if (!output.toString().isEmpty()) {
-            System.out.println(output);
-        }
-
-        return ret;
+        return equipment.stream()
+                .filter(GEAR_SCORES::containsKey)
+                .mapToInt(GEAR_SCORES::get)
+                .sum();
     }
 
     public static List<String> getGearScoreList() {

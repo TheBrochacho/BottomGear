@@ -1,6 +1,7 @@
 package com.github.matt159.bottomgear.item;
 
 import com.github.matt159.bottomgear.data.GearScore;
+import com.github.matt159.bottomgear.data.PlayerScore;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -36,7 +37,7 @@ public class BottomStick extends Item {
     @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
         player.addChatMessage(new ChatComponentText(String.format("Current Gear Score is: %d.",
-                GearScore.getPlayerScores().get(player.getUniqueID()))));
+                PlayerScore.get(player.getUniqueID()))));
         player.addChatMessage(new ChatComponentText(String.format("The threshold for this dimension is: %d",
                 GearScore.getDimScores().get(world.provider.dimensionId))));
 

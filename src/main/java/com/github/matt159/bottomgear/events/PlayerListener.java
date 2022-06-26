@@ -3,6 +3,7 @@ package com.github.matt159.bottomgear.events;
 import baubles.common.container.InventoryBaubles;
 import baubles.common.lib.PlayerHandler;
 import com.github.matt159.bottomgear.data.GearScore;
+import com.github.matt159.bottomgear.data.PlayerScore;
 import com.github.matt159.bottomgear.util.BGConfig;
 import com.github.matt159.bottomgear.util.BGUtil;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -62,7 +63,7 @@ public class PlayerListener {
                 equipment.addAll(Arrays.asList(tps.armor.inventory));
             }
 
-            GearScore.getPlayerScores().put(
+            PlayerScore.set(
                     player.getUniqueID(),
                     GearScore.calculateScore(equipment.stream()
                             .filter(Objects::nonNull)

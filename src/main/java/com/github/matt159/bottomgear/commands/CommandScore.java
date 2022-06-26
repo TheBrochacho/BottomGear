@@ -1,6 +1,7 @@
 package com.github.matt159.bottomgear.commands;
 
 import com.github.matt159.bottomgear.data.GearScore;
+import com.github.matt159.bottomgear.data.PlayerScore;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ChatComponentText;
@@ -19,7 +20,7 @@ public class CommandScore extends SubCommand {
         if (sender instanceof EntityPlayerMP) {
             UUID uuid = ((EntityPlayerMP) sender).getUniqueID();
             sender.addChatMessage(new ChatComponentText(String.format("Your current gear score is %d.",
-                    GearScore.getPlayerScores().get(uuid))));
+                    PlayerScore.get(uuid))));
         }
     }
 }
